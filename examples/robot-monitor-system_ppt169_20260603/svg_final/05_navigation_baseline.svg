@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+    
+    <defs>
+        <filter id="cardShadow" x="-15%" y="-15%" width="130%" height="130%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+            <feOffset dx="0" dy="2" result="offsetblur" />
+            <feFlood flood-color="#0D2137" flood-opacity="0.06" result="shadowColor" />
+            <feComposite in="shadowColor" in2="offsetblur" operator="in" result="shadow" />
+            <feMerge><feMergeNode in="shadow" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+    </defs>
+
+    
+    <rect width="1280" height="720" fill="#FFFFFF" />
+
+    
+    <path fill="#0D47A1" d="M44,32 H44 A4,4 0 0 1 48,36 V64 A4,4 0 0 1 44,68 H44 A4,4 0 0 1 40,64 V36 A4,4 0 0 1 44,32 Z" />
+    <text x="64" y="60" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="28" font-weight="bold" fill="#0D47A1">导航Agent基础版实现与七大局限</text>
+    <text x="64" y="86" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#616161">LLM + 静态场景图技术路线 · 机器人"能跑通"</text>
+
+    
+    <g id="pipeline">
+        <path fill="#E3F2FD" stroke="#1565C0" stroke-width="1" d="M50,105 H1230 A10,10 0 0 1 1240,115 V170 A10,10 0 0 1 1230,180 H50 A10,10 0 0 1 40,170 V115 A10,10 0 0 1 50,105 Z" />
+        <text x="60" y="130" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1565C0">✓ 核心链路（已验证）</text>
+
+        
+        <g transform="translate(60, 142)">
+            <path fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1" d="M6,0 H234 A6,6 0 0 1 240,6 V24 A6,6 0 0 1 234,30 H6 A6,6 0 0 1 0,24 V6 A6,6 0 0 1 6,0 Z" />
+            <text x="12" y="20" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">① 用户说"我想喝果汁"</text>
+        </g>
+        <polygon points="310,157 320,152 320,162" fill="#1565C0" />
+
+        
+        <g transform="translate(325, 142)">
+            <path fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1" d="M6,0 H254 A6,6 0 0 1 260,6 V24 A6,6 0 0 1 254,30 H6 A6,6 0 0 1 0,24 V6 A6,6 0 0 1 6,0 Z" />
+            <text x="12" y="20" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1E88E5">② LLM解析意图+匹配位置</text>
+        </g>
+        <polygon points="600,157 610,152 610,162" fill="#1E88E5" />
+
+        
+        <g transform="translate(615, 142)">
+            <path fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1" d="M6,0 H254 A6,6 0 0 1 260,6 V24 A6,6 0 0 1 254,30 H6 A6,6 0 0 1 0,24 V6 A6,6 0 0 1 6,0 Z" />
+            <text x="12" y="20" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#FF9800">③ 调用导航接口→移动</text>
+        </g>
+        <polygon points="890,157 900,152 900,162" fill="#FF9800" />
+
+        
+        <g transform="translate(905, 142)">
+            <path fill="#1565C0" fill-opacity="0.1" stroke="#1565C0" stroke-width="1" d="M6,0 H194 A6,6 0 0 1 200,6 V24 A6,6 0 0 1 194,30 H6 A6,6 0 0 1 0,24 V6 A6,6 0 0 1 6,0 Z" />
+            <text x="12" y="20" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1565C0" font-weight="bold">④ 到达后任务结束 ✓</text>
+        </g>
+    </g>
+
+    
+    <g id="limitations">
+        <text x="40" y="205" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" fill="#F44336">⚠ 基础版存在的七大局限</text>
+
+        
+        <g transform="translate(40, 220)">
+            <path fill="#0D47A1" d="M4,0 H56 A4,4 0 0 1 60,4 V32 A4,4 0 0 1 56,36 H4 A4,4 0 0 1 0,32 V4 A4,4 0 0 1 4,0 Z" />
+            <text x="30" y="24" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF">#</text>
+
+            <path fill="#0D47A1" d="M69,0 H281 A4,4 0 0 1 285,4 V32 A4,4 0 0 1 281,36 H69 A4,4 0 0 1 65,32 V4 A4,4 0 0 1 69,0 Z" />
+            <text x="175" y="24" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF">局限</text>
+
+            <path fill="#0D47A1" d="M294,0 H826 A4,4 0 0 1 830,4 V32 A4,4 0 0 1 826,36 H294 A4,4 0 0 1 290,32 V4 A4,4 0 0 1 294,0 Z" />
+            <text x="560" y="24" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF">具体表现</text>
+
+            <path fill="#0D47A1" d="M839,0 H1151 A4,4 0 0 1 1155,4 V32 A4,4 0 0 1 1151,36 H839 A4,4 0 0 1 835,32 V4 A4,4 0 0 1 839,0 Z" />
+            <text x="995" y="24" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF">影响</text>
+        </g>
+
+        
+        <g transform="translate(40, 261)">
+            <path fill="#F44336" fill-opacity="0.08" d="M4,0 H56 A4,4 0 0 1 60,4 V44 A4,4 0 0 1 56,48 H4 A4,4 0 0 1 0,44 V4 A4,4 0 0 1 4,0 Z" />
+            <text x="30" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#F44336">1</text>
+
+            <path fill="#FFF3E0" d="M69,0 H281 A4,4 0 0 1 285,4 V44 A4,4 0 0 1 281,48 H69 A4,4 0 0 1 65,44 V4 A4,4 0 0 1 69,0 Z" />
+            <text x="175" y="30" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">场景图是静态封闭词汇</text>
+
+            <path fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5" d="M294,0 H826 A4,4 0 0 1 830,4 V44 A4,4 0 0 1 826,48 H294 A4,4 0 0 1 290,44 V4 A4,4 0 0 1 294,0 Z" />
+            <text x="302" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">用户说"找充电宝"，LLM匹配不到</text>
+            <text x="302" y="38" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">只能随机选择位置</text>
+
+            <path fill="#F44336" fill-opacity="0.05" d="M839,0 H1151 A4,4 0 0 1 1155,4 V44 A4,4 0 0 1 1151,48 H839 A4,4 0 0 1 835,44 V4 A4,4 0 0 1 839,0 Z" />
+            <text x="847" y="30" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#F44336" font-weight="bold">无法识别未定义物体</text>
+        </g>
+
+        
+        <g transform="translate(40, 314)">
+            <path fill="#FF9800" fill-opacity="0.08" d="M4,0 H56 A4,4 0 0 1 60,4 V44 A4,4 0 0 1 56,48 H4 A4,4 0 0 1 0,44 V4 A4,4 0 0 1 4,0 Z" />
+            <text x="30" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FF9800">2</text>
+
+            <path fill="#FFF3E0" d="M69,0 H281 A4,4 0 0 1 285,4 V44 A4,4 0 0 1 281,48 H69 A4,4 0 0 1 65,44 V4 A4,4 0 0 1 69,0 Z" />
+            <text x="175" y="30" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">规划是扁平的</text>
+
+            <path fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5" d="M294,0 H826 A4,4 0 0 1 830,4 V44 A4,4 0 0 1 826,48 H294 A4,4 0 0 1 290,44 V4 A4,4 0 0 1 294,0 Z" />
+            <text x="302" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">LLM直接从全量viewpoint中选</text>
+            <text x="302" y="38" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">容易产生幻觉</text>
+
+            <path fill="#FF9800" fill-opacity="0.05" d="M839,0 H1151 A4,4 0 0 1 1155,4 V44 A4,4 0 0 1 1151,48 H839 A4,4 0 0 1 835,44 V4 A4,4 0 0 1 839,0 Z" />
+            <text x="847" y="30" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#FF9800" font-weight="bold">准确率约 70%</text>
+        </g>
+
+        
+        <g transform="translate(40, 367)">
+            <path fill="#1E88E5" fill-opacity="0.08" d="M4,0 H56 A4,4 0 0 1 60,4 V44 A4,4 0 0 1 56,48 H4 A4,4 0 0 1 0,44 V4 A4,4 0 0 1 4,0 Z" />
+            <text x="30" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E88E5">3</text>
+
+            <path fill="#E3F2FD" d="M69,0 H281 A4,4 0 0 1 285,4 V44 A4,4 0 0 1 281,48 H69 A4,4 0 0 1 65,44 V4 A4,4 0 0 1 69,0 Z" />
+            <text x="175" y="30" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">无动态重规划</text>
+
+            <path fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5" d="M294,0 H826 A4,4 0 0 1 830,4 V44 A4,4 0 0 1 826,48 H294 A4,4 0 0 1 290,44 V4 A4,4 0 0 1 294,0 Z" />
+            <text x="302" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">走到一半遇到障碍物</text>
+            <text x="302" y="38" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">只能从头规划</text>
+
+            <path fill="#1E88E5" fill-opacity="0.05" d="M839,0 H1151 A4,4 0 0 1 1155,4 V44 A4,4 0 0 1 1151,48 H839 A4,4 0 0 1 835,44 V4 A4,4 0 0 1 839,0 Z" />
+            <text x="847" y="30" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1E88E5" font-weight="bold">响应慢、效率低</text>
+        </g>
+
+        
+        <g transform="translate(40, 420)">
+            <path fill="#9C27B0" fill-opacity="0.08" d="M4,0 H56 A4,4 0 0 1 60,4 V44 A4,4 0 0 1 56,48 H4 A4,4 0 0 1 0,44 V4 A4,4 0 0 1 4,0 Z" />
+            <text x="30" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#9C27B0">4</text>
+
+            <path fill="#F3E5F5" d="M69,0 H281 A4,4 0 0 1 285,4 V44 A4,4 0 0 1 281,48 H69 A4,4 0 0 1 65,44 V4 A4,4 0 0 1 69,0 Z" />
+            <text x="175" y="30" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">到达后无视觉核验</text>
+
+            <path fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5" d="M294,0 H826 A4,4 0 0 1 830,4 V44 A4,4 0 0 1 826,48 H294 A4,4 0 0 1 290,44 V4 A4,4 0 0 1 294,0 Z" />
+            <text x="302" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">机器人到了就说完成</text>
+            <text x="302" y="38" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">不确认目标是否在那里</text>
+
+            <path fill="#9C27B0" fill-opacity="0.05" d="M839,0 H1151 A4,4 0 0 1 1155,4 V44 A4,4 0 0 1 1151,48 H839 A4,4 0 0 1 835,44 V4 A4,4 0 0 1 839,0 Z" />
+            <text x="847" y="30" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#9C27B0" font-weight="bold">"到了但没找到"投诉多</text>
+        </g>
+
+        
+        <g transform="translate(40, 473)">
+            <path fill="#607D8B" fill-opacity="0.08" d="M4,0 H56 A4,4 0 0 1 60,4 V44 A4,4 0 0 1 56,48 H4 A4,4 0 0 1 0,44 V4 A4,4 0 0 1 4,0 Z" />
+            <text x="30" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#607D8B">5</text>
+
+            <path fill="#ECEFF1" d="M69,0 H281 A4,4 0 0 1 285,4 V44 A4,4 0 0 1 281,48 H69 A4,4 0 0 1 65,44 V4 A4,4 0 0 1 69,0 Z" />
+            <text x="175" y="30" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">未知环境盲目探索</text>
+
+            <path fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5" d="M294,0 H826 A4,4 0 0 1 830,4 V44 A4,4 0 0 1 826,48 H294 A4,4 0 0 1 290,44 V4 A4,4 0 0 1 294,0 Z" />
+            <text x="302" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">目标不在场景图中时</text>
+            <text x="302" y="38" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">机器人原地转圈</text>
+
+            <path fill="#607D8B" fill-opacity="0.05" d="M839,0 H1151 A4,4 0 0 1 1155,4 V44 A4,4 0 0 1 1151,48 H839 A4,4 0 0 1 835,44 V4 A4,4 0 0 1 839,0 Z" />
+            <text x="847" y="30" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#607D8B" font-weight="bold">探索效率极低</text>
+        </g>
+
+        
+        <g transform="translate(40, 526)">
+            <path fill="#00BCD4" fill-opacity="0.08" d="M4,0 H56 A4,4 0 0 1 60,4 V44 A4,4 0 0 1 56,48 H4 A4,4 0 0 1 0,44 V4 A4,4 0 0 1 4,0 Z" />
+            <text x="30" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#00BCD4">6</text>
+
+            <path fill="#E0F7FA" d="M69,0 H281 A4,4 0 0 1 285,4 V44 A4,4 0 0 1 281,48 H69 A4,4 0 0 1 65,44 V4 A4,4 0 0 1 69,0 Z" />
+            <text x="175" y="30" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">LLM缺乏常识约束</text>
+
+            <path fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5" d="M294,0 H826 A4,4 0 0 1 830,4 V44 A4,4 0 0 1 826,48 H294 A4,4 0 0 1 290,44 V4 A4,4 0 0 1 294,0 Z" />
+            <text x="302" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">用户说"我渴了"</text>
+            <text x="302" y="38" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">可能导航到厕所而非吧台</text>
+
+            <path fill="#00BCD4" fill-opacity="0.05" d="M839,0 H1151 A4,4 0 0 1 1155,4 V44 A4,4 0 0 1 1151,48 H839 A4,4 0 0 1 835,44 V4 A4,4 0 0 1 839,0 Z" />
+            <text x="847" y="30" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#00BCD4" font-weight="bold">用户体验差</text>
+        </g>
+
+        
+        <g transform="translate(40, 579)">
+            <path fill="#F44336" fill-opacity="0.08" d="M4,0 H56 A4,4 0 0 1 60,4 V44 A4,4 0 0 1 56,48 H4 A4,4 0 0 1 0,44 V4 A4,4 0 0 1 4,0 Z" />
+            <text x="30" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#F44336">7</text>
+
+            <path fill="#FFEBEE" d="M69,0 H281 A4,4 0 0 1 285,4 V44 A4,4 0 0 1 281,48 H69 A4,4 0 0 1 65,44 V4 A4,4 0 0 1 69,0 Z" />
+            <text x="175" y="30" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">Token成本高</text>
+
+            <path fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5" d="M294,0 H826 A4,4 0 0 1 830,4 V44 A4,4 0 0 1 826,48 H294 A4,4 0 0 1 290,44 V4 A4,4 0 0 1 294,0 Z" />
+            <text x="302" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">每步都调LLM，100米走廊调10次</text>
+            <text x="302" y="38" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">成本高、响应慢（3-5秒/步）</text>
+
+            <path fill="#F44336" fill-opacity="0.05" d="M839,0 H1151 A4,4 0 0 1 1155,4 V44 A4,4 0 0 1 1151,48 H839 A4,4 0 0 1 835,44 V4 A4,4 0 0 1 839,0 Z" />
+            <text x="847" y="30" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#F44336" font-weight="bold">成本高、响应慢</text>
+        </g>
+    </g>
+
+    
+    <path fill="#0D47A1" fill-opacity="0.03" d="M48,640 H1232 A8,8 0 0 1 1240,648 V677 A8,8 0 0 1 1232,685 H48 A8,8 0 0 1 40,677 V648 A8,8 0 0 1 48,640 Z" />
+    <text x="60" y="668" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">💡 结论：基础版能跑通核心闭环，但存在准确率、可靠性、成本三大瓶颈，需要系统性优化</text>
+
+    
+    <text x="1220" y="700" text-anchor="end" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#9E9E9E">5 / 6</text>
+</svg>

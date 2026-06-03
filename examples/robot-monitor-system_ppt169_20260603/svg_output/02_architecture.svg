@@ -1,0 +1,250 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+    <!-- P02: 系统总体架构（三层架构）- 上层在上，底层在下 -->
+    <defs>
+        <filter id="cardShadow" x="-15%" y="-15%" width="130%" height="130%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+            <feOffset dx="0" dy="2" result="offsetblur"/>
+            <feFlood flood-color="#0D2137" flood-opacity="0.06" result="shadowColor"/>
+            <feComposite in="shadowColor" in2="offsetblur" operator="in" result="shadow"/>
+            <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <marker id="arrowDown" markerWidth="10" markerHeight="10" refX="5" refY="10" orient="auto">
+            <path d="M0,0 L5,10 L10,0 Z" fill="#1E88E5"/>
+        </marker>
+        <marker id="arrowUp" markerWidth="10" markerHeight="10" refX="5" refY="0" orient="auto">
+            <path d="M0,10 L5,0 L10,10 Z" fill="#FF9800"/>
+        </marker>
+    </defs>
+
+    <!-- Background -->
+    <rect width="1280" height="720" fill="#FFFFFF"/>
+
+    <!-- Title Area -->
+    <rect x="40" y="32" width="8" height="36" rx="4" fill="#0D47A1"/>
+    <text x="64" y="60" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="32" font-weight="bold" fill="#0D47A1">系统总体架构（三层架构）</text>
+    <text x="64" y="88" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="14" fill="#616161" letter-spacing="0.5">上层应用层 · 中间服务层 · 底层采集层 · 硬件安全回路</text>
+
+    <!-- ==================== Layer 3: 上层应用层（顶层） ==================== -->
+    <g id="layer3">
+        <!-- Layer Number -->
+        <rect x="40" y="110" width="40" height="105" rx="8" fill="#1565C0"/>
+        <text x="60" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#FFFFFF">03</text>
+
+        <!-- Layer Container -->
+        <rect x="96" y="110" width="1000" height="105" rx="12" fill="#E3F2FD" stroke="#1565C0" stroke-width="1" stroke-dasharray="6 4"/>
+        <text x="596" y="132" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="12" font-weight="bold" fill="#0D47A1" letter-spacing="1">上层应用层（Web监控平台）—— 平台辅助决策</text>
+
+        <!-- Cards -->
+        <g filter="url(#cardShadow)">
+            <rect x="114" y="145" width="145" height="58" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <use data-icon="tabler-outline/device-desktop" x="122" y="153" width="24" height="24" fill="#0D47A1" stroke-width="2"/>
+            <text x="154" y="170" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">PC端 + H5</text>
+            <text x="122" y="190" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">B/S架构浏览器访问</text>
+        </g>
+
+        <g filter="url(#cardShadow)">
+            <rect x="271" y="145" width="145" height="58" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <use data-icon="tabler-outline/eye" x="279" y="153" width="24" height="24" fill="#1E88E5" stroke-width="2"/>
+            <text x="311" y="170" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">实时监控</text>
+            <text x="279" y="190" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">状态看板 · 参数展示</text>
+        </g>
+
+        <g filter="url(#cardShadow)">
+            <rect x="428" y="145" width="145" height="58" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <use data-icon="tabler-outline/alert-triangle" x="436" y="153" width="24" height="24" fill="#F44336" stroke-width="2"/>
+            <text x="468" y="170" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">异常告警</text>
+            <text x="436" y="190" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">弹窗 + 短信/APP推送</text>
+        </g>
+
+        <g filter="url(#cardShadow)">
+            <rect x="585" y="145" width="145" height="58" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <use data-icon="tabler-outline/bug" x="593" y="153" width="24" height="24" fill="#FF9800" stroke-width="2"/>
+            <text x="625" y="170" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">故障溯源</text>
+            <text x="593" y="190" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">历史分析 · 定位诱因</text>
+        </g>
+
+        <g filter="url(#cardShadow)">
+            <rect x="742" y="145" width="170" height="58" rx="6" fill="#1E88E5" fill-opacity="0.08" stroke="#1E88E5" stroke-width="1"/>
+            <use data-icon="tabler-outline/circle-check" x="750" y="153" width="24" height="24" fill="#1E88E5" stroke-width="2"/>
+            <text x="782" y="170" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">远程控制下发</text>
+            <text x="750" y="190" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1E88E5">暂停·急停·重试·回原点</text>
+        </g>
+
+        <g filter="url(#cardShadow)">
+            <rect x="924" y="145" width="156" height="58" rx="6" fill="#9C27B0" fill-opacity="0.08" stroke="#9C27B0" stroke-width="1"/>
+            <use data-icon="tabler-outline/chart-line" x="932" y="153" width="24" height="24" fill="#9C27B0" stroke-width="2"/>
+            <text x="964" y="170" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">辅助决策分析</text>
+            <text x="932" y="190" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#9C27B0">隐性劣化·复杂关联</text>
+        </g>
+    </g>
+
+    <!-- Bidirectional Arrows: Layer 3 ↔ Layer 2 -->
+    <g id="arrows1">
+        <line x1="550" y1="215" x2="550" y2="235" stroke="#1E88E5" stroke-width="2" marker-end="url(#arrowDown)"/>
+        <text x="560" y="230" font-family="Microsoft YaHei, Arial, sans-serif" font-size="8" fill="#1E88E5">状态上报</text>
+        <line x1="620" y1="235" x2="620" y2="215" stroke="#FF9800" stroke-width="2" marker-end="url(#arrowUp)"/>
+        <text x="630" y="230" font-family="Microsoft YaHei, Arial, sans-serif" font-size="8" fill="#FF9800">指令下发</text>
+    </g>
+
+    <!-- ==================== Layer 2: 中间服务层 ==================== -->
+    <g id="layer2">
+        <rect x="40" y="240" width="40" height="105" rx="8" fill="#1E88E5"/>
+        <text x="60" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#FFFFFF">02</text>
+
+        <rect x="96" y="240" width="1000" height="105" rx="12" fill="#EBF5FF" stroke="#1E88E5" stroke-width="1" stroke-dasharray="6 4"/>
+        <text x="596" y="262" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="12" font-weight="bold" fill="#0D47A1" letter-spacing="1">中间服务层（后端核心）</text>
+
+        <g filter="url(#cardShadow)">
+            <rect x="114" y="275" width="200" height="58" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <use data-icon="tabler-outline/server" x="122" y="283" width="24" height="24" fill="#0D47A1" stroke-width="2"/>
+            <text x="154" y="300" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">Java后端+MySQL</text>
+            <text x="122" y="320" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">实时存储·任务记录·故障日志</text>
+        </g>
+
+        <g filter="url(#cardShadow)">
+            <rect x="328" y="275" width="200" height="58" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <use data-icon="tabler-outline/alert-triangle" x="336" y="283" width="24" height="24" fill="#F44336" stroke-width="2"/>
+            <text x="368" y="300" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">异常阈值检测</text>
+            <text x="336" y="320" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">电流/温度超标→自动标记</text>
+        </g>
+
+        <g filter="url(#cardShadow)">
+            <rect x="542" y="275" width="200" height="58" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <use data-icon="tabler-outline/chart-line" x="550" y="283" width="24" height="24" fill="#1565C0" stroke-width="2"/>
+            <text x="582" y="300" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">全流程数据缓存</text>
+            <text x="550" y="320" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">历史数据·故障溯源</text>
+        </g>
+
+        <g filter="url(#cardShadow)">
+            <rect x="756" y="275" width="160" height="58" rx="6" fill="#FF9800" fill-opacity="0.08" stroke="#FF9800" stroke-width="1"/>
+            <use data-icon="tabler-outline/circle-check" x="764" y="283" width="24" height="24" fill="#FF9800" stroke-width="2"/>
+            <text x="796" y="300" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">指令下发管理</text>
+            <text x="764" y="320" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">TCP/MQTT协议</text>
+        </g>
+
+        <g filter="url(#cardShadow)">
+            <rect x="930" y="275" width="150" height="58" rx="6" fill="#9C27B0" fill-opacity="0.08" stroke="#9C27B0" stroke-width="1"/>
+            <use data-icon="tabler-outline/database" x="938" y="283" width="24" height="24" fill="#9C27B0" stroke-width="2"/>
+            <text x="970" y="300" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">知识库分析</text>
+            <text x="938" y="320" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#9C27B0">故障诊断·趋势预警</text>
+        </g>
+    </g>
+
+    <!-- Arrows: Layer 2 ↔ Layer 1 -->
+    <g id="arrows2">
+        <line x1="550" y1="345" x2="550" y2="365" stroke="#1E88E5" stroke-width="2" marker-end="url(#arrowDown)"/>
+        <text x="560" y="360" font-family="Microsoft YaHei, Arial, sans-serif" font-size="8" fill="#1E88E5">数据上传</text>
+        <line x1="620" y1="365" x2="620" y2="345" stroke="#FF9800" stroke-width="2" marker-end="url(#arrowUp)"/>
+        <text x="630" y="360" font-family="Microsoft YaHei, Arial, sans-serif" font-size="8" fill="#FF9800">指令执行</text>
+    </g>
+
+    <!-- ==================== Layer 1: 底层采集层 ==================== -->
+    <g id="layer1">
+        <rect x="40" y="370" width="40" height="150" rx="8" fill="#0D47A1"/>
+        <text x="60" y="452" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#FFFFFF">01</text>
+
+        <rect x="96" y="370" width="1000" height="150" rx="12" fill="#F0F4F8" stroke="#1E88E5" stroke-width="1" stroke-dasharray="6 4"/>
+        <text x="596" y="392" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="12" font-weight="bold" fill="#0D47A1" letter-spacing="1">底层采集层（机器人端 + 机器人大脑）—— 本地实时决策</text>
+
+        <!-- 机器人控制柜 -->
+        <g filter="url(#cardShadow)">
+            <rect x="114" y="405" width="180" height="100" rx="8" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <use data-icon="tabler-outline/robot" x="122" y="415" width="28" height="28" fill="#0D47A1" stroke-width="2"/>
+            <text x="158" y="435" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">机器人控制柜</text>
+            <text x="122" y="455" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">ABB·安川·国产六轴</text>
+            <text x="122" y="470" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">Modbus/原生协议</text>
+            <text x="122" y="485" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">编码器·温度·电压传感器</text>
+            <text x="122" y="500" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1565C0">采集启停状态·关节电流</text>
+        </g>
+
+        <!-- 机器人大脑（核心） -->
+        <g filter="url(#cardShadow)">
+            <rect x="308" y="405" width="280" height="100" rx="8" fill="#1E88E5" fill-opacity="0.1" stroke="#1E88E5" stroke-width="2"/>
+            <rect x="320" y="417" width="36" height="36" rx="6" fill="#1E88E5"/>
+            <use data-icon="tabler-outline/server" x="328" y="425" width="20" height="20" fill="#FFFFFF" stroke-width="2"/>
+            <text x="364" y="438" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#0D47A1">机器人大脑（本地决策核心）</text>
+            <text x="320" y="458" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1E88E5" font-weight="bold">★ 90%以上异常本地毫秒级响应</text>
+            <text x="320" y="473" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1565C0">Ⅰ级轻微: 容错继续 | Ⅱ级中度: 暂停等待</text>
+            <text x="320" y="488" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#F44336">Ⅲ级严重: 急停锁数据 | 故障自检</text>
+        </g>
+
+        <!-- DTU通讯 -->
+        <g filter="url(#cardShadow)">
+            <rect x="602" y="405" width="160" height="100" rx="8" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <use data-icon="tabler-outline/arrow-down" x="610" y="415" width="28" height="28" fill="#0D47A1" stroke-width="2"/>
+            <text x="646" y="435" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">通讯模块</text>
+            <text x="610" y="455" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">4G/以太网DTU</text>
+            <text x="610" y="470" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1E88E5">↑数据上传云端</text>
+            <text x="610" y="485" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#FF9800">↓接收控制指令</text>
+            <text x="610" y="500" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">实时双向通讯</text>
+        </g>
+
+        <!-- 指令执行 -->
+        <g filter="url(#cardShadow)">
+            <rect x="778" y="405" width="150" height="100" rx="8" fill="#FF9800" fill-opacity="0.08" stroke="#FF9800" stroke-width="1"/>
+            <use data-icon="tabler-outline/circle-check" x="786" y="415" width="28" height="28" fill="#FF9800" stroke-width="2"/>
+            <text x="822" y="435" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">指令执行</text>
+            <text x="786" y="455" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">接收平台指令</text>
+            <text x="786" y="470" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#FF9800">暂停·急停·重试</text>
+            <text x="786" y="485" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#FF9800">回原点</text>
+            <text x="786" y="500" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">执行结果反馈</text>
+        </g>
+
+        <!-- 硬件安全回路 -->
+        <g filter="url(#cardShadow)">
+            <rect x="944" y="405" width="136" height="100" rx="8" fill="#F44336" fill-opacity="0.1" stroke="#F44336" stroke-width="2"/>
+            <use data-icon="tabler-outline/alert-triangle" x="952" y="415" width="28" height="28" fill="#F44336" stroke-width="2"/>
+            <text x="988" y="435" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#F44336">硬件安全回路</text>
+            <text x="952" y="455" font-family="Microsoft YaHei, Arial, sans-serif" font-size="8" fill="#F44336" font-weight="bold">最高优先级</text>
+            <text x="952" y="470" font-family="Microsoft YaHei, Arial, sans-serif" font-size="8" fill="#616161">急停·光栅·碰撞</text>
+            <text x="952" y="485" font-family="Microsoft YaHei, Arial, sans-serif" font-size="8" fill="#616161">过流·短路保护</text>
+            <text x="952" y="500" font-family="Microsoft YaHei, Arial, sans-serif" font-size="8" fill="#F44336">纯硬件·不经过大脑</text>
+        </g>
+    </g>
+
+    <!-- ==================== 三级决策架构说明 ==================== -->
+    <g id="decision-levels">
+        <rect x="40" y="535" width="1200" height="145" rx="10" fill="#F8FAFC" stroke="#E0E0E0" stroke-width="1"/>
+        <text x="60" y="560" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#0D47A1">三级分层决策架构</text>
+
+        <!-- Level 1: 硬件安全回路 -->
+        <g transform="translate(60, 575)">
+            <rect width="260" height="90" rx="8" fill="#F44336" fill-opacity="0.06" stroke="#F44336" stroke-width="1"/>
+            <text x="12" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#F44336">① 硬件安全回路决策</text>
+            <text x="12" y="40" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">触发: 急停·光栅·碰撞·过流</text>
+            <text x="12" y="55" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">执行: 纯硬件电路切断动力</text>
+            <text x="12" y="70" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#F44336">特点: 不经过大脑·毫秒级响应</text>
+            <rect x="180" y="55" width="68" height="26" rx="4" fill="#F44336" fill-opacity="0.15"/>
+            <text x="214" y="72" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#F44336">最高优先</text>
+        </g>
+
+        <!-- Level 2: 大脑本地决策 -->
+        <g transform="translate(340, 575)">
+            <rect width="340" height="90" rx="8" fill="#1E88E5" fill-opacity="0.06" stroke="#1E88E5" stroke-width="1"/>
+            <text x="12" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#1E88E5">② 机器人大脑本地决策（90%+异常）</text>
+            <text x="12" y="40" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1565C0">Ⅰ级轻微: 本地容错继续运行</text>
+            <text x="12" y="55" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#FF9800">Ⅱ级中度: 暂停任务等待指令</text>
+            <text x="12" y="70" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#F44336">Ⅲ级严重: 紧急停机锁存数据</text>
+            <rect x="260" y="55" width="68" height="26" rx="4" fill="#1E88E5" fill-opacity="0.15"/>
+            <text x="294" y="72" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1E88E5">毫秒响应</text>
+        </g>
+
+        <!-- Level 3: 平台辅助决策 -->
+        <g transform="translate(700, 575)">
+            <rect width="340" height="90" rx="8" fill="#9C27B0" fill-opacity="0.06" stroke="#9C27B0" stroke-width="1"/>
+            <text x="12" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#9C27B0">③ 平台辅助/人工决策（复杂异常）</text>
+            <text x="12" y="40" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">隐性劣化: 轴承磨损·齿轮老化</text>
+            <text x="12" y="55" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">复杂关联: 多机器人协同冲突</text>
+            <text x="12" y="70" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">疑难故障: 无明确代码·间歇发作</text>
+            <rect x="260" y="55" width="68" height="26" rx="4" fill="#9C27B0" fill-opacity="0.15"/>
+            <text x="294" y="72" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#9C27B0">人工确认</text>
+        </g>
+
+        <!-- Arrow flow -->
+        <line x1="320" y1="620" x2="340" y2="620" stroke="#0D2137" stroke-width="1.5" stroke-dasharray="4 2"/>
+        <line x1="680" y1="620" x2="700" y2="620" stroke="#0D2137" stroke-width="1.5" stroke-dasharray="4 2"/>
+    </g>
+
+    <!-- Page Number -->
+    <text x="1220" y="700" text-anchor="end" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#9E9E9E">2 / 6</text>
+</svg>

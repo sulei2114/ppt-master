@@ -1,0 +1,237 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+    <!-- P04: 三级决策架构详解 -->
+    <defs>
+        <filter id="cardShadow3" x="-15%" y="-15%" width="130%" height="130%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+            <feOffset dx="0" dy="2" result="offsetblur"/>
+            <feFlood flood-color="#0D2137" flood-opacity="0.06" result="shadowColor"/>
+            <feComposite in="shadowColor" in2="offsetblur" operator="in" result="shadow"/>
+            <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <marker id="arrowRight" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 Z" fill="#0D47A1"/>
+        </marker>
+    </defs>
+
+    <!-- Background -->
+    <rect width="1280" height="720" fill="#FFFFFF"/>
+
+    <!-- Title Area -->
+    <rect x="40" y="32" width="8" height="36" rx="4" fill="#0D47A1"/>
+    <text x="64" y="60" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="32" font-weight="bold" fill="#0D47A1">三级分层决策架构详解</text>
+    <text x="64" y="88" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="14" fill="#616161" letter-spacing="0.5">硬件安全兜底 → 大脑本地决策 → 平台辅助决策</text>
+
+    <!-- ==================== Level 1: 硬件安全回路 ==================== -->
+    <g id="level1">
+        <rect x="40" y="110" width="380" height="260" rx="12" fill="#F44336" fill-opacity="0.04" stroke="#F44336" stroke-width="2"/>
+        <rect x="40" y="110" width="380" height="44" rx="12" fill="#F44336"/>
+        <rect x="40" y="134" width="380" height="20" fill="#F44336"/>
+        <text x="230" y="140" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFFFFF">① 硬件安全回路决策</text>
+        <text x="230" y="165" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#F44336">最高优先级 · 不经过大脑 · 纯硬件实现</text>
+
+        <!-- 触发场景 -->
+        <text x="56" y="195" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#0D47A1">触发场景</text>
+        <g transform="translate(56, 205)">
+            <rect width="165" height="28" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <circle cx="14" cy="14" r="4" fill="#F44336"/>
+            <text x="26" y="18" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">急停按钮被按下</text>
+        </g>
+        <g transform="translate(232, 205)">
+            <rect width="165" height="28" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <circle cx="14" cy="14" r="4" fill="#F44336"/>
+            <text x="26" y="18" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">安全光栅/门触发</text>
+        </g>
+        <g transform="translate(56, 241)">
+            <rect width="165" height="28" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <circle cx="14" cy="14" r="4" fill="#F44336"/>
+            <text x="26" y="18" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">碰撞传感器硬触发</text>
+        </g>
+        <g transform="translate(232, 241)">
+            <rect width="165" height="28" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <circle cx="14" cy="14" r="4" fill="#F44336"/>
+            <text x="26" y="18" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">主电路过流/短路</text>
+        </g>
+
+        <!-- 执行逻辑 -->
+        <rect x="56" y="282" width="348" height="38" rx="6" fill="#F44336" fill-opacity="0.1"/>
+        <text x="68" y="298" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#F44336">执行逻辑:</text>
+        <text x="68" y="312" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">硬件继电器直接断开动力电源 → 机器人瞬间停机</text>
+
+        <!-- 关键说明 -->
+        <rect x="56" y="330" width="348" height="28" rx="4" fill="#0D47A1" fill-opacity="0.03"/>
+        <text x="68" y="348" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">大脑和平台只能接收"急停触发"信号，无法干预或取消</text>
+    </g>
+
+    <!-- ==================== Level 2: 大脑本地决策 ==================== -->
+    <g id="level2">
+        <rect x="450" y="110" width="400" height="260" rx="12" fill="#1E88E5" fill-opacity="0.04" stroke="#1E88E5" stroke-width="2"/>
+        <rect x="450" y="110" width="400" height="44" rx="12" fill="#1E88E5"/>
+        <rect x="450" y="134" width="400" height="20" fill="#1E88E5"/>
+        <text x="650" y="140" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFFFFF">② 机器人大脑本地决策</text>
+        <text x="650" y="165" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1E88E5">90%以上运行异常 · 毫秒级响应 · 无需等待平台</text>
+
+        <!-- 异常分级表格 -->
+        <text x="466" y="195" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#0D47A1">异常分级处置</text>
+
+        <!-- 表头 -->
+        <rect x="466" y="205" width="368" height="24" rx="4" fill="#1E88E5" fill-opacity="0.1"/>
+        <text x="506" y="220" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">等级</text>
+        <text x="580" y="220" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">典型场景</text>
+        <text x="720" y="220" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">处置动作</text>
+
+        <!-- Ⅰ级 -->
+        <rect x="466" y="233" width="368" height="30" rx="4" fill="#1565C0" fill-opacity="0.08"/>
+        <rect x="466" y="233" width="36" height="30" rx="4" fill="#1565C0"/>
+        <text x="484" y="252" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF">Ⅰ</text>
+        <text x="514" y="244" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1565C0">轻微</text>
+        <text x="580" y="244" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1A1A1A">网络丢包·温漂·噪声</text>
+        <text x="720" y="244" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1565C0">本地容错·继续运行</text>
+        <text x="580" y="258" font-family="Microsoft YaHei, Arial, sans-serif" font-size="8" fill="#616161">仅上报日志</text>
+
+        <!-- Ⅱ级 -->
+        <rect x="466" y="267" width="368" height="30" rx="4" fill="#FF9800" fill-opacity="0.08"/>
+        <rect x="466" y="267" width="36" height="30" rx="4" fill="#FF9800"/>
+        <text x="484" y="286" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF">Ⅱ</text>
+        <text x="514" y="278" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#FF9800">中度</text>
+        <text x="580" y="278" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1A1A1A">负载超标·轨迹偏移</text>
+        <text x="720" y="278" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#FF9800">暂停任务·等待指令</text>
+        <text x="580" y="292" font-family="Microsoft YaHei, Arial, sans-serif" font-size="8" fill="#616161">上报异常代码·触发告警</text>
+
+        <!-- Ⅲ级 -->
+        <rect x="466" y="301" width="368" height="30" rx="4" fill="#F44336" fill-opacity="0.08"/>
+        <rect x="466" y="301" width="36" height="30" rx="4" fill="#F44336"/>
+        <text x="484" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF">Ⅲ</text>
+        <text x="514" y="312" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#F44336">严重</text>
+        <text x="580" y="312" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1A1A1A">超温·编码器中断</text>
+        <text x="720" y="312" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#F44336">紧急停机·锁存数据</text>
+        <text x="580" y="326" font-family="Microsoft YaHei, Arial, sans-serif" font-size="8" fill="#616161">上报紧急告警·故障寄存器</text>
+
+        <!-- 为什么大脑决策 -->
+        <rect x="466" y="340" width="368" height="22" rx="4" fill="#1E88E5" fill-opacity="0.06"/>
+        <text x="478" y="354" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1E88E5" font-weight="bold">优势: 实时性(毫秒级) · 数据本地化 · 网络中断仍可保护</text>
+    </g>
+
+    <!-- ==================== Level 3: 平台辅助决策 ==================== -->
+    <g id="level3">
+        <rect x="880" y="110" width="360" height="260" rx="12" fill="#9C27B0" fill-opacity="0.04" stroke="#9C27B0" stroke-width="2"/>
+        <rect x="880" y="110" width="360" height="44" rx="12" fill="#9C27B0"/>
+        <rect x="880" y="134" width="360" height="20" fill="#9C27B0"/>
+        <text x="1060" y="140" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFFFFF">③ 平台辅助决策</text>
+        <text x="1060" y="165" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#9C27B0">复杂/隐性异常 · 历史数据分析 · 人工经验判断</text>
+
+        <!-- 异常类型 -->
+        <text x="896" y="195" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#0D47A1">平台处理的异常类型</text>
+
+        <g transform="translate(896, 205)">
+            <rect width="328" height="26" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <circle cx="14" cy="13" r="4" fill="#9C27B0"/>
+            <text x="26" y="17" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">隐性劣化: 轴承磨损·齿轮老化·电机性能下降</text>
+        </g>
+        <g transform="translate(896, 235)">
+            <rect width="328" height="26" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <circle cx="14" cy="13" r="4" fill="#9C27B0"/>
+            <text x="26" y="17" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">复杂关联: 多机器人协同冲突·产线联动异常</text>
+        </g>
+        <g transform="translate(896, 265)">
+            <rect width="328" height="26" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <circle cx="14" cy="13" r="4" fill="#9C27B0"/>
+            <text x="26" y="17" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">疑难故障: 无明确代码·间歇性发作</text>
+        </g>
+        <g transform="translate(896, 295)">
+            <rect width="328" height="26" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <circle cx="14" cy="13" r="4" fill="#9C27B0"/>
+            <text x="26" y="17" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">跨系统协调: 与MES/ERP联动的异常</text>
+        </g>
+
+        <!-- 分析能力 -->
+        <rect x="896" y="330" width="328" height="28" rx="4" fill="#9C27B0" fill-opacity="0.08"/>
+        <text x="908" y="348" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#9C27B0" font-weight="bold">平台能力: 30天历史趋势 · 故障知识库 · 同型号对比</text>
+    </g>
+
+    <!-- ==================== 决策协同流程 ==================== -->
+    <g id="flow">
+        <rect x="40" y="385" width="1200" height="140" rx="12" fill="#F8FAFC" stroke="#E0E0E0" stroke-width="1"/>
+        <text x="60" y="415" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" fill="#0D47A1">平台与大脑的决策协同流程</text>
+
+        <!-- Flow Steps -->
+        <g transform="translate(60, 435)">
+            <rect width="180" height="70" rx="8" fill="#1E88E5" fill-opacity="0.08" stroke="#1E88E5" stroke-width="1"/>
+            <text x="90" y="20" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1E88E5">Step 1</text>
+            <text x="90" y="38" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">大脑上报异常</text>
+            <text x="90" y="54" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">原始数据→平台</text>
+        </g>
+
+        <line x1="240" y1="470" x2="280" y2="470" stroke="#0D2137" stroke-width="1.5" marker-end="url(#arrowRight)"/>
+
+        <g transform="translate(290, 435)">
+            <rect width="180" height="70" rx="8" fill="#9C27B0" fill-opacity="0.08" stroke="#9C27B0" stroke-width="1"/>
+            <text x="90" y="20" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#9C27B0">Step 2</text>
+            <text x="90" y="38" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">平台分析诊断</text>
+            <text x="90" y="54" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">历史库·知识库</text>
+        </g>
+
+        <line x1="470" y1="470" x2="510" y2="470" stroke="#0D2137" stroke-width="1.5" marker-end="url(#arrowRight)"/>
+
+        <g transform="translate(520, 435)">
+            <rect width="180" height="70" rx="8" fill="#FF9800" fill-opacity="0.08" stroke="#FF9800" stroke-width="1"/>
+            <text x="90" y="20" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#FF9800">Step 3</text>
+            <text x="90" y="38" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">运维确认决策</text>
+            <text x="90" y="54" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">查看分析结果</text>
+        </g>
+
+        <line x1="700" y1="470" x2="740" y2="470" stroke="#0D2137" stroke-width="1.5" marker-end="url(#arrowRight)"/>
+
+        <g transform="translate(750, 435)">
+            <rect width="180" height="70" rx="8" fill="#1565C0" fill-opacity="0.08" stroke="#1565C0" stroke-width="1"/>
+            <text x="90" y="20" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1565C0">Step 4</text>
+            <text x="90" y="38" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">下发处置指令</text>
+            <text x="90" y="54" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">复位·回零·调参</text>
+        </g>
+
+        <line x1="930" y1="470" x2="970" y2="470" stroke="#0D2137" stroke-width="1.5" marker-end="url(#arrowRight)"/>
+
+        <g transform="translate(980, 435)">
+            <rect width="180" height="70" rx="8" fill="#1E88E5" fill-opacity="0.08" stroke="#1E88E5" stroke-width="1"/>
+            <text x="90" y="20" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1E88E5">Step 5</text>
+            <text x="90" y="38" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">大脑执行反馈</text>
+            <text x="90" y="54" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">执行结果→平台</text>
+        </g>
+    </g>
+
+    <!-- ==================== 论文写作要点 ==================== -->
+    <g id="thesis-points">
+        <rect x="40" y="540" width="1200" height="125" rx="10" fill="#0D47A1" fill-opacity="0.02" stroke="#E0E0E0" stroke-width="1"/>
+        <text x="60" y="570" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" fill="#0D47A1">论文写作要点</text>
+
+        <g transform="translate(60, 585)">
+            <rect width="280" height="65" rx="6" fill="#F44336" fill-opacity="0.04"/>
+            <text x="12" y="18" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#F44336">硬件安全回路独立性</text>
+            <text x="12" y="36" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 独立于主控系统，是工业机器人</text>
+            <text x="12" y="50" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">  安全设计的强制性要求</text>
+        </g>
+
+        <g transform="translate(360, 585)">
+            <rect width="280" height="65" rx="6" fill="#1E88E5" fill-opacity="0.04"/>
+            <text x="12" y="18" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1E88E5">大脑本地决策必要性</text>
+            <text x="12" y="36" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 网络中断时仍需自主安全保护</text>
+            <text x="12" y="50" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 避免远程决策延迟导致故障扩大</text>
+        </g>
+
+        <g transform="translate(660, 585)">
+            <rect width="280" height="65" rx="6" fill="#9C27B0" fill-opacity="0.04"/>
+            <text x="12" y="18" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#9C27B0">平台辅助决策价值</text>
+            <text x="12" y="36" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 弥补大脑算力/存储不足</text>
+            <text x="12" y="50" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 处理复杂隐性异常需要人工经验</text>
+        </g>
+
+        <g transform="translate(960, 585)">
+            <rect width="260" height="65" rx="6" fill="#1565C0" fill-opacity="0.04"/>
+            <text x="12" y="18" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1565C0">三层架构协同优势</text>
+            <text x="12" y="36" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 致命异常毫秒级响应</text>
+            <text x="12" y="50" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 复杂问题人工介入决策</text>
+        </g>
+    </g>
+
+    <!-- Page Number -->
+    <text x="1220" y="700" text-anchor="end" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#9E9E9E">4 / 6</text>
+</svg>

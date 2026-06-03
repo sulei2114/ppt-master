@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+    <!-- P05: 导航Agent基础版实现与七大局限 -->
+    <defs>
+        <filter id="cardShadow" x="-15%" y="-15%" width="130%" height="130%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+            <feOffset dx="0" dy="2" result="offsetblur"/>
+            <feFlood flood-color="#0D2137" flood-opacity="0.06" result="shadowColor"/>
+            <feComposite in="shadowColor" in2="offsetblur" operator="in" result="shadow"/>
+            <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+    </defs>
+
+    <!-- Background -->
+    <rect width="1280" height="720" fill="#FFFFFF"/>
+
+    <!-- Title Area -->
+    <rect x="40" y="32" width="8" height="36" rx="4" fill="#0D47A1"/>
+    <text x="64" y="60" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="28" font-weight="bold" fill="#0D47A1">导航Agent基础版实现与七大局限</text>
+    <text x="64" y="86" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#616161">LLM + 静态场景图技术路线 · 机器人"能跑通"</text>
+
+    <!-- ==================== 核心链路 ==================== -->
+    <g id="pipeline">
+        <rect x="40" y="105" width="1200" height="75" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="1"/>
+        <text x="60" y="130" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1565C0">✓ 核心链路（已验证）</text>
+
+        <!-- Step 1 -->
+        <g transform="translate(60, 142)">
+            <rect width="240" height="30" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <text x="12" y="20" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">① 用户说"我想喝果汁"</text>
+        </g>
+        <polygon points="310,157 320,152 320,162" fill="#1565C0"/>
+
+        <!-- Step 2 -->
+        <g transform="translate(325, 142)">
+            <rect width="260" height="30" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <text x="12" y="20" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1E88E5">② LLM解析意图+匹配位置</text>
+        </g>
+        <polygon points="600,157 610,152 610,162" fill="#1E88E5"/>
+
+        <!-- Step 3 -->
+        <g transform="translate(615, 142)">
+            <rect width="260" height="30" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+            <text x="12" y="20" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#FF9800">③ 调用导航接口→移动</text>
+        </g>
+        <polygon points="890,157 900,152 900,162" fill="#FF9800"/>
+
+        <!-- Step 4 -->
+        <g transform="translate(905, 142)">
+            <rect width="200" height="30" rx="6" fill="#1565C0" fill-opacity="0.1" stroke="#1565C0" stroke-width="1"/>
+            <text x="12" y="20" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1565C0" font-weight="bold">④ 到达后任务结束 ✓</text>
+        </g>
+    </g>
+
+    <!-- ==================== 七大局限表格 ==================== -->
+    <g id="limitations">
+        <text x="40" y="205" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" fill="#F44336">⚠ 基础版存在的七大局限</text>
+
+        <!-- Table Header -->
+        <g transform="translate(40, 220)">
+            <rect width="60" height="36" rx="4" fill="#0D47A1"/>
+            <text x="30" y="24" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF">#</text>
+
+            <rect x="65" width="220" height="36" rx="4" fill="#0D47A1"/>
+            <text x="175" y="24" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF">局限</text>
+
+            <rect x="290" width="540" height="36" rx="4" fill="#0D47A1"/>
+            <text x="560" y="24" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF">具体表现</text>
+
+            <rect x="835" width="320" height="36" rx="4" fill="#0D47A1"/>
+            <text x="995" y="24" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF">影响</text>
+        </g>
+
+        <!-- Row 1 -->
+        <g transform="translate(40, 261)">
+            <rect width="60" height="48" rx="4" fill="#F44336" fill-opacity="0.08"/>
+            <text x="30" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#F44336">1</text>
+
+            <rect x="65" width="220" height="48" rx="4" fill="#FFF3E0"/>
+            <text x="175" y="30" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">场景图是静态封闭词汇</text>
+
+            <rect x="290" width="540" height="48" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="302" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">用户说"找充电宝"，LLM匹配不到</text>
+            <text x="302" y="38" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">只能随机选择位置</text>
+
+            <rect x="835" width="320" height="48" rx="4" fill="#F44336" fill-opacity="0.05"/>
+            <text x="847" y="30" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#F44336" font-weight="bold">无法识别未定义物体</text>
+        </g>
+
+        <!-- Row 2 -->
+        <g transform="translate(40, 314)">
+            <rect width="60" height="48" rx="4" fill="#FF9800" fill-opacity="0.08"/>
+            <text x="30" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FF9800">2</text>
+
+            <rect x="65" width="220" height="48" rx="4" fill="#FFF3E0"/>
+            <text x="175" y="30" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">规划是扁平的</text>
+
+            <rect x="290" width="540" height="48" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="302" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">LLM直接从全量viewpoint中选</text>
+            <text x="302" y="38" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">容易产生幻觉</text>
+
+            <rect x="835" width="320" height="48" rx="4" fill="#FF9800" fill-opacity="0.05"/>
+            <text x="847" y="30" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#FF9800" font-weight="bold">准确率约 70%</text>
+        </g>
+
+        <!-- Row 3 -->
+        <g transform="translate(40, 367)">
+            <rect width="60" height="48" rx="4" fill="#1E88E5" fill-opacity="0.08"/>
+            <text x="30" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E88E5">3</text>
+
+            <rect x="65" width="220" height="48" rx="4" fill="#E3F2FD"/>
+            <text x="175" y="30" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">无动态重规划</text>
+
+            <rect x="290" width="540" height="48" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="302" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">走到一半遇到障碍物</text>
+            <text x="302" y="38" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">只能从头规划</text>
+
+            <rect x="835" width="320" height="48" rx="4" fill="#1E88E5" fill-opacity="0.05"/>
+            <text x="847" y="30" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1E88E5" font-weight="bold">响应慢、效率低</text>
+        </g>
+
+        <!-- Row 4 -->
+        <g transform="translate(40, 420)">
+            <rect width="60" height="48" rx="4" fill="#9C27B0" fill-opacity="0.08"/>
+            <text x="30" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#9C27B0">4</text>
+
+            <rect x="65" width="220" height="48" rx="4" fill="#F3E5F5"/>
+            <text x="175" y="30" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">到达后无视觉核验</text>
+
+            <rect x="290" width="540" height="48" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="302" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">机器人到了就说完成</text>
+            <text x="302" y="38" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">不确认目标是否在那里</text>
+
+            <rect x="835" width="320" height="48" rx="4" fill="#9C27B0" fill-opacity="0.05"/>
+            <text x="847" y="30" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#9C27B0" font-weight="bold">"到了但没找到"投诉多</text>
+        </g>
+
+        <!-- Row 5 -->
+        <g transform="translate(40, 473)">
+            <rect width="60" height="48" rx="4" fill="#607D8B" fill-opacity="0.08"/>
+            <text x="30" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#607D8B">5</text>
+
+            <rect x="65" width="220" height="48" rx="4" fill="#ECEFF1"/>
+            <text x="175" y="30" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">未知环境盲目探索</text>
+
+            <rect x="290" width="540" height="48" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="302" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">目标不在场景图中时</text>
+            <text x="302" y="38" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">机器人原地转圈</text>
+
+            <rect x="835" width="320" height="48" rx="4" fill="#607D8B" fill-opacity="0.05"/>
+            <text x="847" y="30" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#607D8B" font-weight="bold">探索效率极低</text>
+        </g>
+
+        <!-- Row 6 -->
+        <g transform="translate(40, 526)">
+            <rect width="60" height="48" rx="4" fill="#00BCD4" fill-opacity="0.08"/>
+            <text x="30" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#00BCD4">6</text>
+
+            <rect x="65" width="220" height="48" rx="4" fill="#E0F7FA"/>
+            <text x="175" y="30" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">LLM缺乏常识约束</text>
+
+            <rect x="290" width="540" height="48" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="302" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">用户说"我渴了"</text>
+            <text x="302" y="38" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">可能导航到厕所而非吧台</text>
+
+            <rect x="835" width="320" height="48" rx="4" fill="#00BCD4" fill-opacity="0.05"/>
+            <text x="847" y="30" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#00BCD4" font-weight="bold">用户体验差</text>
+        </g>
+
+        <!-- Row 7 -->
+        <g transform="translate(40, 579)">
+            <rect width="60" height="48" rx="4" fill="#F44336" fill-opacity="0.08"/>
+            <text x="30" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#F44336">7</text>
+
+            <rect x="65" width="220" height="48" rx="4" fill="#FFEBEE"/>
+            <text x="175" y="30" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">Token成本高</text>
+
+            <rect x="290" width="540" height="48" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="302" y="22" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1A1A1A">每步都调LLM，100米走廊调10次</text>
+            <text x="302" y="38" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">成本高、响应慢（3-5秒/步）</text>
+
+            <rect x="835" width="320" height="48" rx="4" fill="#F44336" fill-opacity="0.05"/>
+            <text x="847" y="30" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#F44336" font-weight="bold">成本高、响应慢</text>
+        </g>
+    </g>
+
+    <!-- Bottom Summary -->
+    <rect x="40" y="640" width="1200" height="45" rx="8" fill="#0D47A1" fill-opacity="0.03"/>
+    <text x="60" y="668" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">💡 结论：基础版能跑通核心闭环，但存在准确率、可靠性、成本三大瓶颈，需要系统性优化</text>
+
+    <!-- Page Number -->
+    <text x="1220" y="700" text-anchor="end" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#9E9E9E">5 / 6</text>
+</svg>

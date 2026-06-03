@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+    <!-- P06: 四阶段优化路径 -->
+    <defs>
+        <filter id="cardShadow" x="-15%" y="-15%" width="130%" height="130%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+            <feOffset dx="0" dy="2" result="offsetblur"/>
+            <feFlood flood-color="#0D2137" flood-opacity="0.06" result="shadowColor"/>
+            <feComposite in="shadowColor" in2="offsetblur" operator="in" result="shadow"/>
+            <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+    </defs>
+
+    <!-- Background -->
+    <rect width="1280" height="720" fill="#FFFFFF"/>
+
+    <!-- Title Area -->
+    <rect x="40" y="32" width="8" height="36" rx="4" fill="#0D47A1"/>
+    <text x="64" y="60" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="28" font-weight="bold" fill="#0D47A1">四阶段优化路径</text>
+    <text x="64" y="86" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#616161">调研2022-2026年导航领域13篇里程碑论文 · 从"能跑通"到"跑得稳准实快"</text>
+
+    <!-- ==================== 第一阶段 ==================== -->
+    <g id="phase1">
+        <rect x="40" y="105" width="285" height="290" rx="10" fill="#1565C0" fill-opacity="0.04" stroke="#1565C0" stroke-width="1.5"/>
+        <rect x="40" y="105" width="285" height="42" rx="10" fill="#1565C0"/>
+        <rect x="40" y="125" width="285" height="22" fill="#1565C0"/>
+        <text x="182" y="132" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">第一阶段：工程守底</text>
+
+        <rect x="52" y="155" width="60" height="22" rx="4" fill="#1565C0" fill-opacity="0.15"/>
+        <text x="82" y="170" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1565C0">预计1周</text>
+
+        <text x="52" y="195" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">目标：让机器人"跑得稳"</text>
+
+        <rect x="52" y="207" width="261" height="70" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+        <text x="62" y="225" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1E88E5" font-weight="bold">引入：SayCan + Grounded Decoding</text>
+        <text x="62" y="240" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 结构化输出校验：格式错误自动重试</text>
+        <text x="62" y="255" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 可执行性评分：不可达时规则兜底</text>
+        <text x="62" y="270" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 关键字段兜底：避免运行时崩溃</text>
+
+        <text x="52" y="295" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">解决：#2幻觉选错、#7格式崩坏</text>
+        <rect x="52" y="305" width="261" height="24" rx="4" fill="#1565C0" fill-opacity="0.1"/>
+        <text x="62" y="322" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1565C0" font-weight="bold">预期：失败率 10-15% → &lt;3%</text>
+    </g>
+
+    <!-- ==================== 第二阶段 ==================== -->
+    <g id="phase2">
+        <rect x="345" y="105" width="285" height="290" rx="10" fill="#1E88E5" fill-opacity="0.04" stroke="#1E88E5" stroke-width="1.5"/>
+        <rect x="345" y="105" width="285" height="42" rx="10" fill="#1E88E5"/>
+        <rect x="345" y="125" width="285" height="22" fill="#1E88E5"/>
+        <text x="487" y="132" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">第二阶段：架构升级</text>
+
+        <rect x="357" y="155" width="60" height="22" rx="4" fill="#1E88E5" fill-opacity="0.15"/>
+        <text x="387" y="170" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1E88E5">预计2周</text>
+
+        <text x="357" y="195" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">目标：让机器人"跑得准"</text>
+
+        <rect x="357" y="207" width="261" height="70" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+        <text x="367" y="225" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1E88E5" font-weight="bold">引入：SayPlan + ConceptGraphs + VLMaps</text>
+        <text x="367" y="240" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 层级规划：先选区域再选viewpoint</text>
+        <text x="367" y="255" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 开放词汇场景图：CLIP向量匹配</text>
+        <text x="367" y="270" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 空间语言理解：复杂方位指令</text>
+
+        <text x="357" y="295" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">解决：#1封闭词汇、#2扁平规划</text>
+        <rect x="357" y="305" width="261" height="24" rx="4" fill="#1E88E5" fill-opacity="0.1"/>
+        <text x="367" y="322" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1E88E5" font-weight="bold">预期：准确率 70% → 90%</text>
+    </g>
+
+    <!-- ==================== 第三阶段 ==================== -->
+    <g id="phase3">
+        <rect x="650" y="105" width="285" height="290" rx="10" fill="#FF9800" fill-opacity="0.04" stroke="#FF9800" stroke-width="1.5"/>
+        <rect x="650" y="105" width="285" height="42" rx="10" fill="#FF9800"/>
+        <rect x="650" y="125" width="285" height="22" fill="#FF9800"/>
+        <text x="792" y="132" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">第三阶段：闭环感知</text>
+
+        <rect x="662" y="155" width="60" height="22" rx="4" fill="#FF9800" fill-opacity="0.15"/>
+        <text x="692" y="170" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#FF9800">预计2周</text>
+
+        <text x="662" y="195" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">目标：让机器人"跑得实"</text>
+
+        <rect x="662" y="207" width="261" height="70" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+        <text x="672" y="225" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#FF9800" font-weight="bold">引入：SayNav + CoW + PixNav</text>
+        <text x="672" y="240" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 动态重规划：增量调整路径</text>
+        <text x="672" y="255" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 到达后视觉核验：360°扫视确认</text>
+        <text x="672" y="270" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 像素引导精调：走到面前</text>
+
+        <text x="662" y="295" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">解决：#3无重规划、#4无核验</text>
+        <rect x="662" y="305" width="261" height="24" rx="4" fill="#FF9800" fill-opacity="0.1"/>
+        <text x="672" y="322" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#FF9800" font-weight="bold">预期：投诉率降低 50%</text>
+    </g>
+
+    <!-- ==================== 第四阶段 ==================== -->
+    <g id="phase4">
+        <rect x="955" y="105" width="285" height="290" rx="10" fill="#9C27B0" fill-opacity="0.04" stroke="#9C27B0" stroke-width="1.5"/>
+        <rect x="955" y="105" width="285" height="42" rx="10" fill="#9C27B0"/>
+        <rect x="955" y="125" width="285" height="22" fill="#9C27B0"/>
+        <text x="1097" y="132" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">第四阶段：降本增效</text>
+
+        <rect x="967" y="155" width="60" height="22" rx="4" fill="#9C27B0" fill-opacity="0.15"/>
+        <text x="997" y="170" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#9C27B0">预计2周</text>
+
+        <text x="967" y="195" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#0D47A1">目标：让机器人"跑得快跑得省"</text>
+
+        <rect x="967" y="207" width="261" height="70" rx="6" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+        <text x="977" y="225" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#9C27B0" font-weight="bold">引入：HiRO-Nav + VLFM + ESC</text>
+        <text x="977" y="240" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 混合推理：平坦路段用规则引擎</text>
+        <text x="977" y="255" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 定向探索：Frontier算法识别边界</text>
+        <text x="977" y="270" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">• 常识推理：渴了→优先探索吧台</text>
+
+        <text x="967" y="295" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">解决：#5盲目探索、#6缺常识、#7成本高</text>
+        <rect x="967" y="305" width="261" height="24" rx="4" fill="#9C27B0" fill-opacity="0.1"/>
+        <text x="977" y="322" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#9C27B0" font-weight="bold">预期：Token降60-80% 响应5x</text>
+    </g>
+
+    <!-- ==================== 总结表格 ==================== -->
+    <g id="summary">
+        <rect x="40" y="410" width="1200" height="260" rx="12" fill="#F8FAFC" stroke="#E0E0E0" stroke-width="1"/>
+        <text x="60" y="440" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" fill="#0D47A1">总结：四阶段优化路径</text>
+
+        <!-- Table Header -->
+        <g transform="translate(60, 455)">
+            <rect width="100" height="32" rx="4" fill="#0D47A1"/>
+            <text x="50" y="21" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#FFFFFF">阶段</text>
+
+            <rect x="105" width="80" height="32" rx="4" fill="#0D47A1"/>
+            <text x="145" y="21" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#FFFFFF">目标</text>
+
+            <rect x="190" width="380" height="32" rx="4" fill="#0D47A1"/>
+            <text x="380" y="21" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#FFFFFF">引入的论文</text>
+
+            <rect x="575" width="280" height="32" rx="4" fill="#0D47A1"/>
+            <text x="715" y="21" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#FFFFFF">解决的问题</text>
+
+            <rect x="860" width="280" height="32" rx="4" fill="#0D47A1"/>
+            <text x="1000" y="21" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="bold" fill="#FFFFFF">预期效果</text>
+        </g>
+
+        <!-- Row: 当前 -->
+        <g transform="translate(60, 492)">
+            <rect width="100" height="36" rx="4" fill="#607D8B" fill-opacity="0.1"/>
+            <text x="50" y="23" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#607D8B" font-weight="bold">当前</text>
+            <rect x="105" width="80" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="145" y="23" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#0D47A1">能跑通</text>
+            <rect x="190" width="380" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="200" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">基版 LLM + 静态场景图</text>
+            <rect x="575" width="280" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="585" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">—</text>
+            <rect x="860" width="280" height="36" rx="4" fill="#1565C0" fill-opacity="0.08"/>
+            <text x="870" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1565C0" font-weight="bold">核心闭环已验证 ✓</text>
+        </g>
+
+        <!-- Row: 第一阶段 -->
+        <g transform="translate(60, 532)">
+            <rect width="100" height="36" rx="4" fill="#1565C0" fill-opacity="0.1"/>
+            <text x="50" y="23" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1565C0" font-weight="bold">第一阶段</text>
+            <rect x="105" width="80" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="145" y="23" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#0D47A1">跑得稳</text>
+            <rect x="190" width="380" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="200" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">SayCan + Grounded Decoding</text>
+            <rect x="575" width="280" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="585" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">幻觉、格式崩坏</text>
+            <rect x="860" width="280" height="36" rx="4" fill="#1565C0" fill-opacity="0.08"/>
+            <text x="870" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1565C0" font-weight="bold">失败率 &lt; 3%</text>
+        </g>
+
+        <!-- Row: 第二阶段 -->
+        <g transform="translate(60, 572)">
+            <rect width="100" height="36" rx="4" fill="#1E88E5" fill-opacity="0.1"/>
+            <text x="50" y="23" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1E88E5" font-weight="bold">第二阶段</text>
+            <rect x="105" width="80" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="145" y="23" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#0D47A1">跑得准</text>
+            <rect x="190" width="380" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="200" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">SayPlan + ConceptGraphs + VLMaps</text>
+            <rect x="575" width="280" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="585" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">封闭词汇、扁平规划</text>
+            <rect x="860" width="280" height="36" rx="4" fill="#1E88E5" fill-opacity="0.08"/>
+            <text x="870" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#1E88E5" font-weight="bold">准确率 90%</text>
+        </g>
+
+        <!-- Row: 第三阶段 -->
+        <g transform="translate(60, 612)">
+            <rect width="100" height="36" rx="4" fill="#FF9800" fill-opacity="0.1"/>
+            <text x="50" y="23" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#FF9800" font-weight="bold">第三阶段</text>
+            <rect x="105" width="80" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="145" y="23" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#0D47A1">跑得实</text>
+            <rect x="190" width="380" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="200" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">SayNav + CoW + PixNav</text>
+            <rect x="575" width="280" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="585" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">无重规划、无核验</text>
+            <rect x="860" width="280" height="36" rx="4" fill="#FF9800" fill-opacity="0.08"/>
+            <text x="870" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#FF9800" font-weight="bold">投诉率降 50%</text>
+        </g>
+
+        <!-- Row: 第四阶段 -->
+        <g transform="translate(60, 652)">
+            <rect width="100" height="36" rx="4" fill="#9C27B0" fill-opacity="0.1"/>
+            <text x="50" y="23" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#9C27B0" font-weight="bold">第四阶段</text>
+            <rect x="105" width="80" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="145" y="23" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#0D47A1">跑得快</text>
+            <rect x="190" width="380" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="200" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">HiRO-Nav + VLFM + ESC</text>
+            <rect x="575" width="280" height="36" rx="4" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="0.5"/>
+            <text x="585" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#616161">成本高、盲目探索</text>
+            <rect x="860" width="280" height="36" rx="4" fill="#9C27B0" fill-opacity="0.08"/>
+            <text x="870" y="23" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#9C27B0" font-weight="bold">Token降60-80% 响应5x</text>
+        </g>
+    </g>
+
+    <!-- Timeline -->
+    <rect x="40" y="695" width="1200" height="2" fill="#0D47A1" fill-opacity="0.1"/>
+    <text x="640" y="712" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#616161">整体路径：从"能跑通"到"跑得稳→跑得准→跑得实→跑得快" | 预计总工期 7 周</text>
+
+    <!-- Page Number -->
+    <text x="1220" y="700" text-anchor="end" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#9E9E9E">6 / 6</text>
+</svg>

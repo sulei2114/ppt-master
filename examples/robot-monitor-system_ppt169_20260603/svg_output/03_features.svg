@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+    <!-- P03: 平台关键功能详解 -->
+    <defs>
+        <filter id="cardShadow2" x="-15%" y="-15%" width="130%" height="130%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+            <feOffset dx="0" dy="2" result="offsetblur"/>
+            <feFlood flood-color="#0D2137" flood-opacity="0.06" result="shadowColor"/>
+            <feComposite in="shadowColor" in2="offsetblur" operator="in" result="shadow"/>
+            <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <linearGradient id="pillarHead1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#1E88E5"/>
+            <stop offset="100%" stop-color="#42A5F5"/>
+        </linearGradient>
+        <linearGradient id="pillarHead2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#F44336"/>
+            <stop offset="100%" stop-color="#EF5350"/>
+        </linearGradient>
+        <linearGradient id="pillarHead3" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#FF9800"/>
+            <stop offset="100%" stop-color="#FFA726"/>
+        </linearGradient>
+    </defs>
+
+    <!-- Background -->
+    <rect width="1280" height="720" fill="#FFFFFF"/>
+
+    <!-- Title Area -->
+    <rect x="40" y="32" width="8" height="36" rx="4" fill="#0D47A1"/>
+    <text x="64" y="60" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="32" font-weight="bold" fill="#0D47A1">平台关键功能详解</text>
+    <text x="64" y="88" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="14" fill="#616161" letter-spacing="0.5">实时状态监控 · 异常告警 · 故障排查溯源</text>
+
+    <!-- ==================== Pillar 1: 实时状态查看 ==================== -->
+    <g id="pillar1">
+        <g filter="url(#cardShadow2)">
+            <rect x="40" y="115" width="380" height="540" rx="12" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+        </g>
+
+        <!-- Pillar Header -->
+        <rect x="40" y="115" width="380" height="56" rx="12" fill="url(#pillarHead1)"/>
+        <rect x="40" y="147" width="380" height="24" fill="url(#pillarHead1)"/>
+        <use data-icon="tabler-outline/eye" x="60" y="127" width="32" height="32" fill="#FFFFFF" stroke-width="2"/>
+        <text x="102" y="150" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="20" font-weight="bold" fill="#FFFFFF">实时状态查看功能</text>
+
+        <!-- Feature Section 1 -->
+        <rect x="56" y="190" width="348" height="1" fill="#E0E0E0"/>
+        <text x="56" y="215" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#0D47A1">核心页面</text>
+        <circle cx="68" cy="240" r="4" fill="#1E88E5"/>
+        <text x="82" y="244" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">机器人总览看板</text>
+        <circle cx="68" cy="266" r="4" fill="#1E88E5"/>
+        <text x="82" y="270" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">单机器人详情页</text>
+        <circle cx="68" cy="292" r="4" fill="#1E88E5"/>
+        <text x="82" y="296" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">任务运行日志</text>
+
+        <!-- Feature Section 2 -->
+        <rect x="56" y="316" width="348" height="1" fill="#E0E0E0"/>
+        <text x="56" y="341" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#0D47A1">数据刷新</text>
+        <rect x="56" y="355" width="80" height="30" rx="6" fill="#1E88E5" fill-opacity="0.1"/>
+        <text x="96" y="375" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1E88E5">2秒</text>
+        <text x="148" y="375" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#616161">轮询刷新，实时同步运行状态</text>
+
+        <!-- Feature Section 3 -->
+        <rect x="56" y="400" width="348" height="1" fill="#E0E0E0"/>
+        <text x="56" y="425" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#0D47A1">任务台账</text>
+        <circle cx="68" cy="450" r="4" fill="#1565C0"/>
+        <text x="82" y="454" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">自动记录任务开始/结束时间</text>
+        <circle cx="68" cy="476" r="4" fill="#1565C0"/>
+        <text x="82" y="480" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">运行结果：正常完成 / 异常终止</text>
+
+        <!-- Status Tags -->
+        <rect x="56" y="508" width="72" height="26" rx="4" fill="#1565C0" fill-opacity="0.1"/>
+        <text x="92" y="526" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1565C0">空闲</text>
+        <rect x="138" y="508" width="72" height="26" rx="4" fill="#1E88E5" fill-opacity="0.1"/>
+        <text x="174" y="526" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#1E88E5">执行任务</text>
+        <rect x="220" y="508" width="72" height="26" rx="4" fill="#FF9800" fill-opacity="0.1"/>
+        <text x="256" y="526" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#FF9800">暂停</text>
+        <rect x="302" y="508" width="72" height="26" rx="4" fill="#F44336" fill-opacity="0.1"/>
+        <text x="338" y="526" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#F44336">异常停机</text>
+    </g>
+
+    <!-- ==================== Pillar 2: 异常告警 ==================== -->
+    <g id="pillar2">
+        <g filter="url(#cardShadow2)">
+            <rect x="450" y="115" width="380" height="540" rx="12" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+        </g>
+
+        <!-- Pillar Header -->
+        <rect x="450" y="115" width="380" height="56" rx="12" fill="url(#pillarHead2)"/>
+        <rect x="450" y="147" width="380" height="24" fill="url(#pillarHead2)"/>
+        <use data-icon="tabler-outline/alert-triangle" x="470" y="127" width="32" height="32" fill="#FFFFFF" stroke-width="2"/>
+        <text x="512" y="150" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="20" font-weight="bold" fill="#FFFFFF">异常告警模块</text>
+
+        <!-- Alert Flow -->
+        <rect x="466" y="190" width="348" height="1" fill="#E0E0E0"/>
+        <text x="466" y="215" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#0D47A1">告警触发流程</text>
+
+        <!-- Flow Step 1 -->
+        <rect x="466" y="230" width="348" height="42" rx="6" fill="#F44336" fill-opacity="0.06"/>
+        <text x="476" y="248" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="12" font-weight="bold" fill="#F44336">STEP 1</text>
+        <text x="536" y="248" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">机器人触发故障</text>
+
+        <!-- Arrow -->
+        <line x1="640" y1="272" x2="640" y2="284" stroke="#F44336" stroke-width="1.5"/>
+        <polygon points="636,284 644,284 640,290" fill="#F44336"/>
+
+        <!-- Flow Step 2 -->
+        <rect x="466" y="294" width="348" height="42" rx="6" fill="#F44336" fill-opacity="0.06"/>
+        <text x="476" y="312" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="12" font-weight="bold" fill="#F44336">STEP 2</text>
+        <text x="536" y="312" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">后端识别异常</text>
+
+        <!-- Arrow -->
+        <line x1="640" y1="336" x2="640" y2="348" stroke="#F44336" stroke-width="1.5"/>
+        <polygon points="636,348 644,348 640,354" fill="#F44336"/>
+
+        <!-- Flow Step 3 -->
+        <rect x="466" y="358" width="348" height="42" rx="6" fill="#F44336" fill-opacity="0.1"/>
+        <text x="476" y="376" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="12" font-weight="bold" fill="#F44336">STEP 3</text>
+        <text x="536" y="376" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">Web页面弹窗红色告警</text>
+
+        <!-- Alert Details -->
+        <rect x="466" y="420" width="348" height="1" fill="#E0E0E0"/>
+        <text x="466" y="445" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#0D47A1">告警通知方式</text>
+        <circle cx="478" cy="470" r="4" fill="#F44336"/>
+        <text x="492" y="474" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">Web页面弹窗告警</text>
+        <circle cx="478" cy="496" r="4" fill="#F44336"/>
+        <text x="492" y="500" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">短信推送通知</text>
+        <circle cx="478" cy="522" r="4" fill="#F44336"/>
+        <text x="492" y="526" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">APP消息推送</text>
+
+        <!-- Alert Info -->
+        <rect x="466" y="548" width="348" height="1" fill="#E0E0E0"/>
+        <text x="466" y="573" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#0D47A1">告警附带信息</text>
+        <rect x="466" y="586" width="100" height="26" rx="4" fill="#0D47A1" fill-opacity="0.06"/>
+        <text x="516" y="604" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">故障代码</text>
+        <rect x="576" y="586" width="100" height="26" rx="4" fill="#0D47A1" fill-opacity="0.06"/>
+        <text x="626" y="604" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">发生时间</text>
+        <rect x="686" y="586" width="100" height="26" rx="4" fill="#0D47A1" fill-opacity="0.06"/>
+        <text x="736" y="604" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" fill="#0D47A1">任务编号</text>
+    </g>
+
+    <!-- ==================== Pillar 3: 故障排查溯源 ==================== -->
+    <g id="pillar3">
+        <g filter="url(#cardShadow2)">
+            <rect x="860" y="115" width="380" height="540" rx="12" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+        </g>
+
+        <!-- Pillar Header -->
+        <rect x="860" y="115" width="380" height="56" rx="12" fill="url(#pillarHead3)"/>
+        <rect x="860" y="147" width="380" height="24" fill="url(#pillarHead3)"/>
+        <use data-icon="tabler-outline/bug" x="880" y="127" width="32" height="32" fill="#FFFFFF" stroke-width="2"/>
+        <text x="922" y="150" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="20" font-weight="bold" fill="#FFFFFF">故障排查溯源</text>
+
+        <!-- Innovation Badge -->
+        <rect x="1080" y="130" width="60" height="24" rx="12" fill="#FFFFFF" fill-opacity="0.3"/>
+        <text x="1110" y="147" text-anchor="middle" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF">重点</text>
+
+        <!-- Section 1: 在线初步诊断 -->
+        <rect x="876" y="190" width="348" height="1" fill="#E0E0E0"/>
+        <text x="876" y="215" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#0D47A1">在线初步诊断</text>
+
+        <rect x="876" y="228" width="348" height="68" rx="8" fill="#FF9800" fill-opacity="0.04" stroke="#FF9800" stroke-width="0.5" stroke-dasharray="4 3"/>
+        <text x="892" y="250" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">内置故障码数据库</text>
+        <text x="892" y="272" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="12" fill="#616161">报故障代码 → 自动匹配故障原因</text>
+        <text x="892" y="290" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="12" fill="#616161">（过载 / 伺服故障 / 通讯中断等）</text>
+
+        <!-- Section 2: 历史数据复盘 -->
+        <rect x="876" y="316" width="348" height="1" fill="#E0E0E0"/>
+        <text x="876" y="341" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#0D47A1">历史数据复盘</text>
+
+        <rect x="876" y="354" width="348" height="68" rx="8" fill="#1E88E5" fill-opacity="0.04" stroke="#1E88E5" stroke-width="0.5" stroke-dasharray="4 3"/>
+        <rect x="890" y="364" width="68" height="26" rx="6" fill="#1E88E5" fill-opacity="0.1"/>
+        <text x="924" y="382" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E88E5">5min</text>
+        <text x="970" y="382" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">故障前实时参数曲线</text>
+        <text x="892" y="410" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="12" fill="#616161">对比正常工况，快速定位硬件/程序问题</text>
+
+        <!-- Section 3: 故障分类统计 -->
+        <rect x="876" y="436" width="348" height="1" fill="#E0E0E0"/>
+        <text x="876" y="461" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="14" font-weight="bold" fill="#0D47A1">故障分类统计</text>
+
+        <rect x="876" y="474" width="348" height="68" rx="8" fill="#1565C0" fill-opacity="0.04" stroke="#1565C0" stroke-width="0.5" stroke-dasharray="4 3"/>
+        <circle cx="892" cy="498" r="4" fill="#1565C0"/>
+        <text x="906" y="502" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">按月统计故障频次</text>
+        <circle cx="892" cy="524" r="4" fill="#1565C0"/>
+        <text x="906" y="528" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#1A1A1A">汇总高频故障，辅助预防性维护</text>
+
+        <!-- Key Benefit -->
+        <rect x="876" y="558" width="348" height="40" rx="8" fill="#0D47A1" fill-opacity="0.04"/>
+        <text x="892" y="583" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="12" fill="#0D47A1" font-weight="bold">无需去现场，即可定位故障诱因</text>
+        <text x="1104" y="583" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="12" fill="#616161">所有异常永久归档</text>
+    </g>
+
+    <!-- Page Number -->
+    <text x="1220" y="700" text-anchor="end" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" fill="#9E9E9E">3 / 6</text>
+</svg>
