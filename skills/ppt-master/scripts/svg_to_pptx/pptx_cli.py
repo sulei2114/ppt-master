@@ -307,7 +307,8 @@ Recorded narration:
             stem = output_base.stem
             legacy_path = output_base.parent / f"{stem}_svg{output_base.suffix}"
     else:
-        exports_dir = project_path / "exports"
+        # Default output directory is the current working directory
+        exports_dir = Path.cwd()
         exports_dir.mkdir(parents=True, exist_ok=True)
         native_path = exports_dir / f"{project_name}_{timestamp}.pptx"
         # svg_output/ snapshot always goes under backup/<ts>/ in default-flow

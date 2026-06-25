@@ -6,5 +6,9 @@
   "google": {
     "summary": "Google brand identity — multi-product corporate decks, developer events (Google I/O style), education and training in the Google ecosystem",
     "primary_color": "#4285F4"
+  },
+  "corporate-tech": {
+    "summary": "企业技术风格 — 白色背景、深蓝色主题、绿色/灰色辅助，适合技术方案评审、代码优化汇报、架构设计分享",
+    "primary_color": "#1E3A5F"
   }
 }
