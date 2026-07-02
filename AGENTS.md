@@ -28,6 +28,12 @@ PPT Master is an AI-driven presentation generation system. Multi-role collaborat
 
 ## Execution Requirements
 
+- **AI Agent / Robotics Icon Guideline** — When the presentation topic relates to AI Agents, smart agents, robots, artificial intelligence, algorithms, or computer chips, the AI MUST prioritize using or inlining the blue-white tech vector icons located in [`skills/ppt-master/templates/icons/ai-agent/`](skills/ppt-master/templates/icons/ai-agent/):
+  - Agent network: [`ai-agent-network.svg`](skills/ppt-master/templates/icons/ai-agent/ai-agent-network.svg)
+  - Robot face: [`ai-robot-face.svg`](skills/ppt-master/templates/icons/ai-agent/ai-robot-face.svg)
+  - AI chip: [`ai-chip.svg`](skills/ppt-master/templates/icons/ai-agent/ai-chip.svg)
+  - **Color Consistency**: When inlining these SVGs, all color values (fill, stroke, etc.) MUST align dynamically with the chosen presentation theme colors defined in `spec_lock.md` (e.g. `brand_color`). Do not use hardcoded colors that conflict with the overall theme.
+  - **Fallback Generation**: If a specific required icon is not found in the `ai-agent/` folder, the AI MUST manually design and write a clean inline SVG (viewBox="0 0 24 24", minimalist tech line style) that fits the context on the fly. Do not fail or skip.
 - For standalone template creation (no source deck), read [`skills/ppt-master/workflows/create-template.md`](skills/ppt-master/workflows/create-template.md).
 - Technical SVG/PPT constraints live in [`skills/ppt-master/references/shared-standards.md`](skills/ppt-master/references/shared-standards.md).
 - Canvas choices live in [`skills/ppt-master/references/canvas-formats.md`](skills/ppt-master/references/canvas-formats.md).

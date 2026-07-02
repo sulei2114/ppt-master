@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+  <!-- Pin connectors on the sides - Tech light blue/gray -->
+  <path d="M9 1v4M12 1v4M15 1v4M9 19v4M12 19v4M15 19v4M23 9h-4M23 12h-4M23 15h-4M5 9H1M5 12H1M5 15H1" stroke="#90CDF4" stroke-width="2" stroke-linecap="round" />
+  <!-- Core processor - High contrast tech blue, white fill -->
+  <rect x="5" y="5" width="14" height="14" rx="2" fill="#FFFFFF" stroke="#0052FF" stroke-width="2" />
+  <!-- Processor internal core - Neon blue background with white accent -->
+  <rect x="9" y="9" width="6" height="6" rx="1" fill="#00D2FF" fill-opacity="0.2" stroke="#00D2FF" stroke-width="1.5" />
+  <!-- Central node -->
+  <circle cx="12" cy="12" r="1.5" fill="#FFFFFF" stroke="#0052FF" stroke-width="1" />
+</svg>

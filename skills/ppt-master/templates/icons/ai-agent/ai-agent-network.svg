@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+  <!-- Brain outline profile simplified - Subtle tech light blue -->
+  <path d="M12 2a8 8 0 0 0-8 8c0 3.3 1.8 6.2 4.5 7.5l.5.5v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-2l.5-.5c2.7-1.3 4.5-4.2 4.5-7.5a8 8 0 0 0-8-8z" stroke="#90CDF4" stroke-width="1.5" stroke-dasharray="2 2" />
+  <!-- Internal network connections - High contrast tech blue -->
+  <line x1="12" y1="7" x2="12" y2="9" stroke="#0052FF" stroke-width="2" stroke-linecap="round" />
+  <line x1="6.8" y1="11" x2="9.5" y2="12" stroke="#0052FF" stroke-width="2" stroke-linecap="round" />
+  <line x1="17.2" y1="11" x2="14.5" y2="12" stroke="#0052FF" stroke-width="2" stroke-linecap="round" />
+  <line x1="8.5" y1="16.5" x2="10.5" y2="14.5" stroke="#0052FF" stroke-width="2" stroke-linecap="round" />
+  <line x1="15.5" y1="16.5" x2="13.5" y2="14.5" stroke="#0052FF" stroke-width="2" stroke-linecap="round" />
+  <!-- Nodes - White fill with Neon blue stroke -->
+  <circle cx="12" cy="5" r="2.5" fill="#FFFFFF" stroke="#00D2FF" stroke-width="1.5" />
+  <circle cx="5" cy="10" r="2.5" fill="#FFFFFF" stroke="#00D2FF" stroke-width="1.5" />
+  <circle cx="19" cy="10" r="2.5" fill="#FFFFFF" stroke="#00D2FF" stroke-width="1.5" />
+  <circle cx="7" cy="18" r="2.5" fill="#FFFFFF" stroke="#00D2FF" stroke-width="1.5" />
+  <circle cx="17" cy="18" r="2.5" fill="#FFFFFF" stroke="#00D2FF" stroke-width="1.5" />
+  <!-- Central agent core - Dual ring -->
+  <circle cx="12" cy="12" r="3.5" fill="#0052FF" fill-opacity="0.1" stroke="#0052FF" stroke-width="1.5" />
+  <circle cx="12" cy="12" r="1" fill="#FFFFFF" />
+</svg>
