@@ -56,6 +56,8 @@
 | **Success** | `#......` | Positive indicators (green family) |
 | **Warning** | `#......` | Issue markers (red family) |
 
+**Palette harmony**: [warm / cool / near-neutral temperature; tonal / analogous / controlled complementary / neutral+jewel harmony; approximate 60% neutral base / 30% supporting color / up to 10% accent. Explain in one sentence why this combination suits the content.]
+
 > **Reference**: Industry colors in `references/strategist.md` or `scripts/config.py` under `INDUSTRY_COLORS`
 
 ### AI Image Strategy (fill only when §VIII has `ai` rows)

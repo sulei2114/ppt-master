@@ -1,14 +1,35 @@
 {
+  "algorithm-pipeline": {
+    "summary": "算法与流水线技术对比风格 (科技风格默认浅色模板) — 深度学习流水线、算法演进对比、端到端数据时序流、系统架构、工程对比分析",
+    "primary_color": "#0070C0",
+    "secondary_color": "#2E7D32",
+    "is_tech_default": true,
+    "is_default": true
+  },
+  "dark-tech-briefing": {
+    "summary": "深蓝灰暗调技术简报风格 (Dark Tech Briefing) — 现代深色极客风、多Agent协作架构、系统联调排障、时序与工程闭环汇报 (当前5050端口运行风格)",
+    "primary_color": "#55C6D8",
+    "secondary_color": "#F5A15D",
+    "background_theme": "dark"
+  },
   "anthropic": {
-    "summary": "Anthropic brand identity — AI/LLM tech talks, developer conferences, technical training, product launches",
+    "summary": "Anthropic brand identity (前沿 AI 先锋) — AI/LLM tech talks, developer conferences, technical training, product launches",
     "primary_color": "#D97757"
   },
-  "google": {
-    "summary": "Google brand identity — multi-product corporate decks, developer events (Google I/O style), education and training in the Google ecosystem",
-    "primary_color": "#4285F4"
+  "catppuccin-latte": {
+    "summary": "Catppuccin Latte 暖调浅色极简风 — 米白温暖底色、柔和对比度、温润粉彩强调色，适合技术白皮书、行业分析、高阶学术与咨询汇报",
+    "primary_color": "#1E66F5"
+  },
+  "catppuccin-mocha": {
+    "summary": "Catppuccin Mocha 极客深色高对比度风 — 深邃炭青黑底、清爽低饱和粉彩对比、代码与架构极度清晰，适合开发者大会、AI技术汇报、系统架构设计",
+    "primary_color": "#89B4FA"
   },
   "corporate-tech": {
     "summary": "企业技术风格 — 白色背景、深蓝色主题、绿色/灰色辅助，适合技术方案评审、代码优化汇报、架构设计分享",
     "primary_color": "#1E3A5F"
+  },
+  "google": {
+    "summary": "Google brand identity — multi-product corporate decks, developer events (Google I/O style), education and training in the Google ecosystem",
+    "primary_color": "#4285F4"
   }
 }

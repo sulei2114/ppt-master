@@ -59,10 +59,11 @@ Triggered by the user signals listed in "When to Run".
 3. For each listed annotation:
    - Edit the targeted element in `<project_path>/svg_output/<file>` per the annotation text.
    - Remove `data-edit-target` and `data-edit-annotation` from that element.
-4. Re-export:
+4. Re-export (遵循 Rule 10，仅保留最新一份 PPTX):
    ```bash
    python3 ${SKILL_DIR}/scripts/finalize_svg.py <project_path>
-   python3 ${SKILL_DIR}/scripts/svg_to_pptx.py <project_path>
+   mkdir -p <project_path>/PPT/
+   python3 ${SKILL_DIR}/scripts/svg_to_pptx.py <project_path> -o <project_path>/PPT/<project_name>.pptx
    ```
 5. Tell the user (in their language): annotations applied, new PPTX exported, preview is still running. If the browser still shows the old slide, refresh or reselect the page.
 6. Loop: more annotations submitted → repeat from step 1. User signals done or "stop preview" → end.

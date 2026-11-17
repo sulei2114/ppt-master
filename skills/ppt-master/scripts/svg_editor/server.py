@@ -32,6 +32,10 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Optional
 
+# Register SVG namespace to prevent ns0: prefix in serialized SVG output
+ET.register_namespace('', 'http://www.w3.org/2000/svg')
+ET.register_namespace('xlink', 'http://www.w3.org/1999/xlink')
+
 from flask import Flask, jsonify, request, send_from_directory
 
 logger = logging.getLogger('svg_editor')
@@ -187,7 +191,7 @@ def _inline_icons(content: str) -> tuple[str, list[dict]]:
 
 def create_app(
     project_dir: str,
-    idle_timeout: int = 900,
+    idle_timeout: int = 7200,
     live: bool = False,
     lock_file: Optional[Path] = None,
 ) -> Flask:
@@ -212,6 +216,13 @@ def create_app(
     @app.before_request
     def _update_activity():
         app.config['LAST_REQUEST_TIME'] = time.time()
+
+    @app.after_request
+    def _add_no_cache(response):
+        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+        return response
 
     def _exit_with_lock_release(code: int = 0) -> None:
         lf = app.config.get('LOCK_FILE')
@@ -523,7 +534,7 @@ def build_parser() -> argparse.ArgumentParser:
         '--timeout',
         type=int,
         default=None,
-        help='Idle timeout in seconds (default: 900; live mode default: 7200; 0 = disabled)',
+        help='Idle timeout in seconds (default: 7200; 0 = disabled)',
     )
     return parser
 
@@ -586,9 +597,8 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     idle_timeout = args.timeout
     if idle_timeout is None:
-        # Long but finite default for --live so a forgotten preview eventually
-        # dies. Set --timeout 0 to keep the historical never-expire behavior.
-        idle_timeout = 7200 if args.live else 900
+        # Default idle timeout to 2 hours (7200 seconds) for both live and plain mode
+        idle_timeout = 7200
 
     app = create_app(
         str(project_path),
@@ -607,7 +617,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     logger.info('project: %s', project_path)
     logger.info('svg_output: %s (%d slides)', svg_output, svg_count)
     logger.info('idle timeout: %ds (0 = disabled)', idle_timeout)
-    app.run(host='127.0.0.1', port=args.port, debug=False)
+    app.run(host='0.0.0.0', port=args.port, debug=False)
     return 0
 
 

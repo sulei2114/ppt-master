@@ -1,12 +1,12 @@
 {
   "meta": {
-    "total": 71,
+    "total": 73,
     "defaultViewBox": "0 0 1280 720",
     "formats": ["ppt169"],
     "filePattern": "{key}.svg",
     "libraryPositioning": "Visualization template library covering charts, infographics, diagrams, and strategic frameworks. The `charts/` path is retained for backward compatibility. Templates are named by visual structure, not by business-model name — model-specific frameworks (SWOT, BCG, PEST, OKR, Porter's Five Forces, Value Chain, etc.) are matched via keywords in `summary`.",
-    "summaryGrammar": "Each chart's `summary` is a selection rule, not a description. Format: 'Pick for <content shape + scale>. Skip if <reason → alternative>'. Strategist matches every page's content shape against all 71 summaries; no category/keyword index — full-read is intentional.",
-    "updated": "2026-05-13"
+    "summaryGrammar": "Each chart's `summary` is a selection rule, not a description. Format: 'Pick for <content shape + scale>. Skip if <reason → alternative>'. Strategist matches every page's content shape against all 73 summaries; no category/keyword index — full-read is intentional.",
+    "updated": "2026-11-02"
   },
   "charts": {
     "area_chart": {
@@ -221,6 +221,12 @@
     },
     "labeled_card": {
       "summary": "Pick for 3-4 parallel aspects of one subject with per-aspect titles + short body (self-introduction, four-pillar overview, capability quadrant). Skip for plain feature lists (use icon_grid), sequential steps (use numbered_steps), or strategic quadrants (use quadrant_text_bullets / matrix_2x2)."
+    },
+    "academic_architecture": {
+      "summary": "Pick for top-tier academic paper Figure 1 / system architecture with 3-tier domains (Input Data/Problem, Core Multi-Agent/Component Interaction, Validation Gate & Feedback Loop). Skip for simple linear workflow (use process_flow) or simple layers without feedback (use layered_architecture)."
+    },
+    "academic_pipeline_loop": {
+      "summary": "Pick for iterative self-improving algorithms, knowledge evolution, or reinforcement/feedback learning loops with explicit verification threshold θ, success/failure branches, and rollback arrow. Skip for non-iterative linear pipelines (use pipeline_with_stages)."
     }
   }
 }

@@ -188,7 +188,9 @@ grep "chart-plot-area" <project_path>/svg_output/<current_page>.svg
 ```
 
 > All chart templates in `templates/charts/` include this marker as a reference. If you are drawing a chart and the marker is absent, you have a bug.
-- **Technical specs**: see [shared-standards.md](shared-standards.md) for SVG/PPT constraints
+- **Technical specs**: see [shared-standards.md](shared-standards.md) for SVG/PPT constraints (including §4.2 Anti-Overlap, §4.3 Pill Badge Bounding, and §4.4 Flowchart Line Shielding)
+- **Pill badge and tag container width (Mandatory)**: when creating top pill badges, status indicators, or category tags (`<rect rx="..." .../>`), compute width strictly to fit the text + margins: $\text{width} \ge \text{text\_length} \times \text{char\_width} + \text{icon\_width} + 20\text{px} + (\text{char\_count} \times \text{letter\_spacing})$. Text MUST never stick out of the badge container.
+- **Flowchart line shielding & vertical spacing (Mandatory)**: when placing text on or near connector lines or self-loop arcs, ALWAYS place a solid background badge (`<rect fill="..." stroke="..."/>`) under the `<text>` to prevent lines from cutting through text. Maintain at least 12~16px vertical breathing space below card header titles.
 - **Card containers — use the documented patterns**: when a content page needs section cards (4 quadrants, parallel aspects, capability blocks, info cards), use the patterns codified in [`templates/charts/CHART_STYLE_GUIDE.md`](../templates/charts/CHART_STYLE_GUIDE.md) §11 — half-rounded section tab (§11.1), nested card border without stroke (§11.2), card-grid skeletons (§11.3), diagonal dashed connector for cross-quadrant relationships (§11.5), ground-anchor ellipse as a non-filter depth marker (§11.6), bidirectional interaction arrows for paired protocols (§11.7). Do not reinvent the "tinted full-rounded rect + white cover-rect to hide the bottom corners" hack; it survives in older templates but breaks SVG→PPTX color editing. Reference templates: [`labeled_card.svg`](../templates/charts/labeled_card.svg), [`quadrant_text_bullets.svg`](../templates/charts/quadrant_text_bullets.svg), [`kpi_cards.svg`](../templates/charts/kpi_cards.svg), [`matrix_2x2.svg`](../templates/charts/matrix_2x2.svg), [`team_roster.svg`](../templates/charts/team_roster.svg), [`client_server_flow.svg`](../templates/charts/client_server_flow.svg).
 - **Semantic shapes over preset stacks**: when a slide needs to express "ascending / converging / breaking through / stacking" — i.e., a relationship that goes beyond a generic arrow — prefer a single custom `<polygon>` or `<path>` that encodes the semantics geometrically, rather than stacking multiple preset arrows. A converging-tip path or a podium polygon reads faster than three arrows pointing at a label. Examples of this technique appear in many imported corporate decks; see `projects/01_template_import/svg_output/slide_01.svg` shape-158 for a reference (gradient-filled inward-pointing arrow). Do not codify these as templates — they are page-specific; the rule is just "consider polygon before stacking presets."
 - **Visual depth — through restraint**: layered depth comes from rhythm (flat vs lifted, dense vs spacious), not from shadows everywhere. Apply shadow to at most 2-3 genuinely floating elements per page (cards on photos, primary CTA, overlays); keep peer-grid cards, dividers, body containers flat. Reach for typography weight, spacing, accent bars, subtle tints **before** shadow. Full rules in shared-standards.md §6.
@@ -286,7 +288,7 @@ Chart SVGs referenced in **VII. Visualization Reference List** are loaded once v
 - **Freely adjust**: composition, axis ranges, grid, legend, spacing, decoration — as long as the chart stays accurate and readable
 - **Forbidden**: changing visualization type without spec justification; omitting data points or structural elements from the outline
 
-> Templates: `templates/charts/` (70 types). Index: `templates/charts/charts_index.json`
+> Templates: `templates/charts/` (73 types). Index: `templates/charts/charts_index.json`
 
 ### 5.1 Chart Coordinate Calibration
 
@@ -295,6 +297,44 @@ Coordinate calibration runs as a **standalone post-generation workflow**, not in
 The executor's only obligation here is upstream: embed the `<!-- chart-plot-area ... -->` marker on every chart page during initial draft (§3.1). Verify-charts enumerates chart pages from `design_spec.md §VII` (authoritative deck plan) and uses the marker to feed `svg_position_calculator.py`.
 
 > Do NOT run `svg_position_calculator.py` during the initial draft. The calculator calibrates already-generated SVGs against their declared plot areas; running it before the SVG exists has nothing to compare against.
+
+### 5.2 顶会科研关键图与系统演化 SVG 编码细则 (Academic Figure 1 & System Pipeline SVG Grammar)
+
+当页面适配 `academic_architecture` 或 `academic_pipeline_loop` 时，遵循以下原生 SVG 约束，确保像素级质感与 0 溢出：
+
+1. **三段式域容器 (Domain Box)**：
+   ```xml
+   <!-- 左/中/右大域背景框：宽约 340-380px，高约 480-520px，rx="12" -->
+   <rect x="40" y="130" width="360" height="520" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5"/>
+   <!-- 域分类药丸徽标 -->
+   <rect x="56" y="146" width="160" height="28" rx="14" fill="#0F172A"/>
+   <text x="136" y="165" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">01 输入与环境域</text>
+   ```
+2. **正交带圆角连线与行为动词胶囊 (Orthogonal Connector with Action Capsule)**：
+   ```xml
+   <!-- 连接折线：必须声明 stroke-linejoin="round" -->
+   <path d="M 400 320 H 450 V 380 H 490" fill="none" stroke="#64748B" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+   <!-- 折线中段悬浮白色微胶囊，标注中文动作 -->
+   <rect x="420" y="340" width="76" height="20" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+   <text x="458" y="354" text-anchor="middle" font-size="10" font-weight="600" fill="#334155">提交候选修改</text>
+   ```
+3. **判定门禁与正反双向分支 (Validation Gate & Dual Outcomes)**：
+   ```xml
+   <!-- 验证门禁：浅琥珀底色胶囊或菱形 -->
+   <rect x="910" y="280" width="160" height="48" rx="24" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+   <text x="990" y="309" text-anchor="middle" font-size="13" font-weight="800" fill="#B45309">验证收益 Δ ≥ θ ?</text>
+   <!-- 绿色通过分支向下 -->
+   <path d="M 990 328 V 390" fill="none" stroke="#16A34A" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+   <!-- 红色回滚箭头大 U 型向上回环至演化中枢 -->
+   <path d="M 1070 304 H 1120 V 105 H 680 V 160" fill="none" stroke="#DC2626" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#arrowRed)"/>
+   ```
+4. **字体回退规范**：图内 `<text>` 节点一律声明包含中文字体栈：`font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif"`。
+5. **Fireworks 几何与防重叠校验 (Fireworks Geometry & Collision Check)**：
+   在编写完复杂的系统拓扑或学术流程图后，可运行本地桥接工具执行深度几何防重叠与遮挡检查：
+   ```bash
+   python3 scripts/fireworks_bridge.py check <page_svg>
+   ```
+   自动核验节点几何重叠、文本外边框碰撞、标记连接与正交连线端点遮挡，确保 0 溢出、0 遮挡。
 
 ---
 

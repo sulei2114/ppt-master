@@ -92,7 +92,7 @@ Accept user combinations and one-off coinages ("Scandinavian + slight industrial
 
 > Step 3 already collapses brand and layout inputs into one fused `design_spec.md`; this layer reads from that single source and does not need to re-resolve brand vs layout precedence.
 
-Proactively provide a color scheme (HEX values) based on content characteristics and industry.
+Proactively provide one complete, coordinated color scheme (HEX values) based on content characteristics and industry. Do not treat an industry's familiar saturated color as the default page background or largest color field. First decide the palette's temperature and harmony, then assign a neutral base, a supporting hue, and a restrained accent.
 
 **Industry color quick reference** (full 14-industry list in `scripts/config.py` under `INDUSTRY_COLORS`):
 
@@ -103,7 +103,15 @@ Proactively provide a color scheme (HEX values) based on content characteristics
 | Healthcare / Health | `#00796B` Teal Green | Professional, reassuring |
 | Government / Public Sector | `#C41E3A` Red | Authoritative, dignified |
 
-**Color rules**: 60-30-10 rule (primary 60%, secondary 30%, accent 10%); text contrast ratio >= 4.5:1; no more than 4 colors per page.
+**Color construction (wardrobe-inspired)**:
+
+1. Select a coherent temperature: warm, cool, or near-neutral. Check that background neutrals, supporting colors, and accents do not clash accidentally.
+2. Build the palette as an outfit: about **60% neutral base** (canvas and negative space), **30% supporting color / tonal layers**, and **up to 10% accent**. These are approximate visual proportions. The primary brand hue may sit in the 30% or 10% role; it does not automatically occupy 60%.
+3. Choose one harmony: tonal (same hue, varied lightness), analogous (neighboring hues), controlled complementary (one muted contrast accent), or neutral with one jewel-tone accent. Prefer tonal or analogous schemes for technical/business decks; use a complementary accent sparingly.
+4. Specify the color roles in HEX and add one sentence to `design_spec.md §III` naming the temperature, harmony, and area balance. Lock only actual colors in `spec_lock.md`.
+5. Keep text contrast ratio >= 4.5:1. Limit each page to one dominant accent; additional colors are allowed only for meaningful data series or semantic states. Reuse each series' color mapping across the deck.
+
+Industry colors above are hue cues, not a finished palette. Pair them with suitable neutrals and supporting tones; when saturated, assign them to a controlled support/accent role rather than spreading them over large surfaces unless the user explicitly requests that treatment. Follow [`premium-visual-language.md`](premium-visual-language.md) for the full color harmony rules.
 
 ### f. Icon Usage Confirmation
 
@@ -570,20 +578,20 @@ The catalog covers **both data charts and structural information designs**. A "m
 The most common Strategist failure mode is missing the structural half — treating "chart" as "numeric chart only" and leaving team / agenda / principles / journey pages as text-only when a template would fit. Read the catalog with both lenses.
 
 > **Reading is mandatory; the catalog is a starting point, not a copy target.**
-> - Fully read `templates/charts/charts_index.json` **before drafting the Eight Confirmations** — the read happens up front, not when you sit down to write Section VII. The file contains `meta` + `charts.<key>.summary` only; each `summary` is a selection rule (`"Pick for … Skip if …"`), not a description. There is **no category, quickLookup, or keyword index** — selection is done by semantically matching each page's content shape against all 71 summaries in one pass.
+> - Fully read `templates/charts/charts_index.json` **before drafting the Eight Confirmations** — the read happens up front, not when you sit down to write Section VII. The file contains `meta` + `charts.<key>.summary` only; each `summary` is a selection rule (`"Pick for … Skip if …"`), not a description. There is **no category, quickLookup, or keyword index** — selection is done by semantically matching each page's content shape against all 73 summaries in one pass.
 > - Not every page needs a chart. When a page's information structure matches a catalog entry, **use that template as a structural starting point** — keep the visualization type and core layout logic, then adapt composition, density, color, decoration, and accompanying elements to fit this deck's content and visual tone. Free adjustment is encouraged; what is forbidden is (a) generating without reading the catalog, and (b) blind verbatim mimicry that ignores the page's actual content weight.
 >
 > **Workflow**:
-> 1. Read all 71 summaries; for each page, identify the Pick clause that matches the page's content shape AND does not match any Skip clause.
-> 2. Prefer specificity (`vertical_list` over generic `numbered_steps`).
+> 1. Read all 73 summaries; for each page, identify the Pick clause that matches the page's content shape AND does not match any Skip clause.
+> 2. Prefer specificity (`vertical_list` over generic `numbered_steps`; `academic_architecture` / `academic_pipeline_loop` over flat `process_flow` for AI agent pipelines, paper Figure 1s, or iterative self-improving frameworks).
 > 3. One primary visualization per page; a supporting layout may accompany it.
 > 4. List selections in Design Spec section VII; section IX only notes the visualization type name per page.
 >
-> **Source vocabulary mismatch** — the catalog is in English. When source content uses Chinese / industry jargon ("中台", "架构图", "述职", "管道", "前后端"), translate the intent first, then match against summaries. The catalog deliberately keeps no keyword index — full-read forces semantic matching rather than lexical grep.
+> **Source vocabulary mismatch** — the catalog is in English. When source content uses Chinese / industry jargon ("中台", "架构图", "述职", "管道", "前后端", "算法演化", "系统架构", "论文关键图"), translate the intent first, then match against summaries. The catalog deliberately keeps no keyword index — full-read forces semantic matching rather than lexical grep.
 >
 > **Read-audit (mandatory, section VII format)** — single combined table; `summary-quote` column is the anti-fabrication audit, `path` + `usage` serve Executor lookup. Format defined in [`templates/design_spec_reference.md`](../templates/design_spec_reference.md) §VII:
 > ```
-> Catalog read: 71 templates
+> Catalog read: 73 templates
 >
 > | Page | Template      | Path                              | Summary-quote (verbatim) | Usage |
 > | ---- | ------------- | --------------------------------- | ------------------------ | ----- |

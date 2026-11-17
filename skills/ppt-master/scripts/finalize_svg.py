@@ -152,6 +152,19 @@ def finalize_project(
         safe_print("[PREVIEW] Preview mode, no operations will be performed")
         return True
 
+    # Pre-check Gate: Run SVG Quality Checker
+    try:
+        from svg_quality_checker import SVGQualityChecker
+        checker = SVGQualityChecker()
+        results = checker.check_directory(str(svg_output))
+        total_errors = sum(len(r.get('errors', [])) for r in results)
+        if total_errors > 0:
+            safe_print(f"\n[ERROR] SVG Quality Check failed with {total_errors} error(s). Finalization aborted.")
+            safe_print(f"        Please fix SVG constraint violations before finalizing/exporting.\n")
+            return False
+    except Exception as e:
+        pass
+
     # Step 1: Copy directory
     if svg_final.exists():
         shutil.rmtree(svg_final)

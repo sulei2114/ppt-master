@@ -232,6 +232,11 @@ html, body {
     max-width: 100%;
     max-height: calc(100vh - 72px);
     height: auto;
+    text-rendering: geometricPrecision;
+    shape-rendering: geometricPrecision;
+    image-rendering: -webkit-optimize-contrast;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* ---------- SVG element interaction states ---------- */

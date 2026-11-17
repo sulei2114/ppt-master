@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+    <!--
+    Academic System Architecture Chart Template
+    Usage: Top-tier paper Figure 1 / system overview architecture visualization
+    Scenarios: Multi-agent collaboration, input-to-decision pipeline, closed-loop validation
+    Supports: 3 Domain Containers + Orthogonal Routing + Decision Gate + Feedback Loop
+    -->
+    <defs>
+        <filter id="cardShadow" x="-10%" y="-10%" width="125%" height="125%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+            <feOffset dx="0" dy="2" result="offsetblur"/>
+            <feFlood flood-color="#0F172A" flood-opacity="0.06" result="shadowColor"/>
+            <feComposite in="shadowColor" in2="offsetblur" operator="in" result="shadow"/>
+            <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B"/>
+        </marker>
+        <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284C7"/>
+        </marker>
+        <marker id="arrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#16A34A"/>
+        </marker>
+        <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#DC2626"/>
+        </marker>
+    </defs>
+
+    <!-- Canvas Background -->
+    <rect width="1280" height="720" fill="#FFFFFF"/>
+
+    <!-- Header Section -->
+    <rect x="40" y="28" width="6" height="34" rx="3" fill="#0284C7"/>
+    <text x="56" y="54" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="26" font-weight="800" fill="#0F172A">算法系统全景架构与闭环决策机制</text>
+    <text x="56" y="78" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="13" font-weight="600" fill="#64748B" letter-spacing="0.5">
+        输入与问题上下文 · 核心交互演化中枢 · 确定性校验与准入决策三域协同
+    </text>
+
+    <!-- Feedback Loop (Top U-turn Arrow from Domain 3 to Domain 2) -->
+    <path d="M 1075 425 H 1220 V 96 H 650 V 122" fill="none" stroke="#DC2626" stroke-width="2" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#arrowRed)"/>
+    <g filter="url(#cardShadow)">
+        <rect x="850" y="84" width="220" height="24" rx="12" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1"/>
+        <text x="960" y="100" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" font-weight="700" fill="#DC2626">带失败证据与反思回环 (Rollback Loop)</text>
+    </g>
+
+    <!-- ==================== Domain 1: Input & Problem Context ==================== -->
+    <rect x="40" y="112" width="350" height="568" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5"/>
+    <rect x="56" y="128" width="168" height="26" rx="13" fill="#334155"/>
+    <text x="140" y="145" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">01 输入与问题上下文</text>
+
+    <!-- Card 1.1: 任务工况与业务轨迹 -->
+    <g filter="url(#cardShadow)">
+        <rect x="56" y="172" width="318" height="110" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <rect x="70" y="186" width="30" height="30" rx="6" fill="#EFF6FF"/>
+        <text x="85" y="206" text-anchor="middle" font-size="14" font-weight="800" fill="#0284C7">T</text>
+        <text x="110" y="202" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="14" font-weight="700" fill="#0F172A">业务工况与执行轨迹</text>
+        <text x="110" y="218" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" font-weight="500" fill="#64748B">多源任务需求与状态序列</text>
+        <line x1="70" y1="230" x2="358" y2="230" stroke="#F1F5F9" stroke-width="1"/>
+        <text x="70" y="248" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#475569">· 实时工况流与异常边界样本输入</text>
+        <text x="70" y="266" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#475569">· 环境感知数据与时序遥测快照</text>
+    </g>
+
+    <!-- Card 1.2: 外置原子知识与先验库 -->
+    <g filter="url(#cardShadow)">
+        <rect x="56" y="298" width="318" height="110" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <rect x="70" y="312" width="30" height="30" rx="6" fill="#F0FDF4"/>
+        <text x="85" y="332" text-anchor="middle" font-size="14" font-weight="800" fill="#16A34A">K</text>
+        <text x="110" y="328" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="14" font-weight="700" fill="#0F172A">外置知识资产与约束</text>
+        <text x="110" y="344" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" font-weight="500" fill="#64748B">规范条目与解耦经验库</text>
+        <line x1="70" y1="356" x2="358" y2="356" stroke="#F1F5F9" stroke-width="1"/>
+        <text x="70" y="374" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#475569">· 冻结模型主体与核心执行骨架</text>
+        <text x="70" y="392" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#475569">· 外置受限原子知识集可独立修改</text>
+    </g>
+
+    <!-- Card 1.3: 历史失败归因与反例集 -->
+    <g filter="url(#cardShadow)">
+        <rect x="56" y="424" width="318" height="110" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <rect x="70" y="438" width="30" height="30" rx="6" fill="#FEF2F2"/>
+        <text x="85" y="458" text-anchor="middle" font-size="14" font-weight="800" fill="#DC2626">F</text>
+        <text x="110" y="454" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="14" font-weight="700" fill="#0F172A">反例归因与失败收据</text>
+        <text x="110" y="470" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" font-weight="500" fill="#64748B">归因凭据与支持案例对</text>
+        <line x1="70" y1="482" x2="358" y2="482" stroke="#F1F5F9" stroke-width="1"/>
+        <text x="70" y="500" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#475569">· 历史已知缺陷与 Corner Cases</text>
+        <text x="70" y="518" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#475569">· 结构化成对事实 (Success / Failure)</text>
+    </g>
+
+    <!-- Forward Path 1 -> 2 -->
+    <path d="M 390 353 H 424" fill="none" stroke="#0284C7" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+    <g filter="url(#cardShadow)">
+        <rect x="368" y="324" width="76" height="22" rx="11" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+        <text x="406" y="339" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="10" font-weight="700" fill="#0284C7">特征提取</text>
+    </g>
+
+    <!-- ==================== Domain 2: Core Processing & Interaction ==================== -->
+    <rect x="430" y="112" width="440" height="568" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5"/>
+    <rect x="446" y="128" width="188" height="26" rx="13" fill="#0284C7"/>
+    <text x="540" y="145" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">02 核心算法与交互演化中枢</text>
+
+    <!-- Sub-card 2.1: 智能体协同编排器 -->
+    <g filter="url(#cardShadow)">
+        <rect x="446" y="172" width="408" height="110" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="466" y="200" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="15" font-weight="800" fill="#0F172A">智能体协同编排与上下文分发</text>
+        <rect x="740" y="184" width="98" height="22" rx="11" fill="#EFF6FF"/>
+        <text x="789" y="199" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" font-weight="700" fill="#0284C7">多角色调度</text>
+        <line x1="466" y1="216" x2="838" y2="216" stroke="#F1F5F9" stroke-width="1"/>
+        <text x="466" y="238" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="12" fill="#475569">· 对照成功与失败证据链生成结构化反思提示词</text>
+        <text x="466" y="258" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="12" fill="#475569">· 协调 Critic 与 Evolver 角色实施有限粒度推演</text>
+    </g>
+
+    <!-- Sub-card 2.2: 知识原子演化与约束对齐 -->
+    <g filter="url(#cardShadow)">
+        <rect x="446" y="298" width="408" height="150" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="466" y="326" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="15" font-weight="800" fill="#0F172A">知识原子化有限编辑 (Atomic Knowledge Edits)</text>
+        <line x1="466" y1="342" x2="838" y2="342" stroke="#F1F5F9" stroke-width="1"/>
+        <rect x="466" y="356" width="116" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+        <text x="524" y="378" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="12" font-weight="700" fill="#334155">角色提示调优</text>
+        <rect x="592" y="356" width="116" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+        <text x="650" y="378" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="12" font-weight="700" fill="#334155">约束边界微调</text>
+        <rect x="718" y="356" width="116" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+        <text x="776" y="378" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="12" font-weight="700" fill="#334155">协议动作映射</text>
+        <text x="466" y="416" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#64748B">限制单轮最多 3 处原子编辑，生成可审计 Diff 与回滚快照</text>
+        <text x="466" y="434" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#64748B">严格隔离核心执行逻辑，杜绝非受控无序演化与知识漂移</text>
+    </g>
+
+    <!-- Sub-card 2.3: 候选补丁包封装 -->
+    <g filter="url(#cardShadow)">
+        <rect x="446" y="464" width="408" height="90" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <rect x="460" y="478" width="30" height="30" rx="6" fill="#EFF6FF"/>
+        <text x="475" y="498" text-anchor="middle" font-size="14" font-weight="800" fill="#0284C7">P</text>
+        <text x="500" y="495" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="14" font-weight="700" fill="#0F172A">候选增量包打包 (Candidate Patch)</text>
+        <text x="500" y="513" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#64748B">附带校验收据与预期收益标签</text>
+        <line x1="460" y1="524" x2="838" y2="524" stroke="#F1F5F9" stroke-width="1"/>
+        <text x="460" y="542" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#475569">格式化统一补丁，输出至下游进行确定性隔离评测</text>
+    </g>
+
+    <!-- Forward Path 2 -> 3 -->
+    <path d="M 870 353 H 904" fill="none" stroke="#0284C7" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+    <g filter="url(#cardShadow)">
+        <rect x="850" y="324" width="76" height="22" rx="11" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+        <text x="888" y="339" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="10" font-weight="700" fill="#0284C7">提交验证</text>
+    </g>
+
+    <!-- ==================== Domain 3: Validation & Gate Domain ==================== -->
+    <rect x="910" y="112" width="330" height="568" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5"/>
+    <rect x="926" y="128" width="180" height="26" rx="13" fill="#16A34A"/>
+    <text x="1016" y="145" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">03 确定性校验与准入决策</text>
+
+    <!-- Sub-card 3.1: 确定性校验器 -->
+    <g filter="url(#cardShadow)">
+        <rect x="926" y="172" width="298" height="110" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="942" y="198" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="14" font-weight="800" fill="#0F172A">确定性离线校验器</text>
+        <line x1="942" y1="212" x2="1208" y2="212" stroke="#F1F5F9" stroke-width="1"/>
+        <text x="942" y="232" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#475569">· 留出集 (Holdout Testbed) 回放</text>
+        <text x="942" y="250" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#475569">· 语义失败与基础设施故障剥离</text>
+        <text x="942" y="268" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#475569">· 计算增益指标与历史回归率</text>
+    </g>
+
+    <!-- Sub-card 3.2: 判定门禁胶囊 -->
+    <g filter="url(#cardShadow)">
+        <rect x="940" y="306" width="270" height="52" rx="26" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+        <text x="1075" y="337" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="15" font-weight="800" fill="#B45309">
+            验证收益增益 Δ ≥ 阈值 θ ?
+        </text>
+    </g>
+
+    <!-- Branch: Green Downward (Success) -->
+    <path d="M 1075 358 V 400" fill="none" stroke="#16A34A" stroke-width="3" marker-end="url(#arrowGreen)"/>
+    <g filter="url(#cardShadow)">
+        <rect x="926" y="410" width="298" height="96" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.5"/>
+        <rect x="942" y="424" width="24" height="24" rx="12" fill="#16A34A"/>
+        <text x="954" y="441" text-anchor="middle" font-size="14" font-weight="800" fill="#FFFFFF">✓</text>
+        <text x="976" y="442" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="14" font-weight="800" fill="#16A34A">达标：准入合并 (Merge)</text>
+        <text x="942" y="470" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#15803D">· 知识增量持久化并更新快照 sha256</text>
+        <text x="942" y="488" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#15803D">· 广播最新资产至全机生产环境生效</text>
+    </g>
+
+    <!-- Branch: Red Right (Failure Rollback) -->
+    <path d="M 1075 332 H 1075" fill="none" stroke="#DC2626" stroke-width="2"/>
+    <g filter="url(#cardShadow)">
+        <rect x="926" y="524" width="298" height="88" rx="8" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1.5"/>
+        <rect x="942" y="538" width="24" height="24" rx="12" fill="#DC2626"/>
+        <text x="954" y="555" text-anchor="middle" font-size="14" font-weight="800" fill="#FFFFFF">✗</text>
+        <text x="976" y="556" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="14" font-weight="800" fill="#DC2626">未达标：立即回滚 (Rollback)</text>
+        <text x="942" y="582" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#B91C1C">· 丢弃当前候选修改，恢复基线快照</text>
+        <text x="942" y="598" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC', sans-serif" font-size="11" fill="#B91C1C">· 提取失败用例生成反思反馈回路</text>
+    </g>
+
+</svg>

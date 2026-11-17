@@ -266,6 +266,9 @@ class SVGQualityChecker:
                 # 5. Check text wrapping methods
                 self._check_text_elements(content, result)
 
+                # 5b. Check connector path and arrow container intrusion
+                self._check_connector_and_arrow_intrusions(content, result)
+
                 # 6. Check image references (file existence and resolution)
                 self._check_image_references(content, svg_path, result)
 
@@ -285,6 +288,9 @@ class SVGQualityChecker:
                 #    image_sources.json; skip in template mode.
                 if not self.template_mode:
                     self._check_sourced_image_attribution(content, svg_path, result)
+
+                # 10. Check visual richness & text-heavy prevention (shared-standards.md §9)
+                self._check_visual_richness(content, result)
 
             # Determine pass/fail
             result['passed'] = len(result['errors']) == 0
@@ -427,6 +433,22 @@ class SVGQualityChecker:
                     "Detected marker-start/marker-end referencing a marker id, "
                     "but no <marker> element found in the file")
 
+        # clipPath is conditionally allowed ONLY inside <defs> (see shared-standards.md §1.2).
+        # Placing <clipPath> inside a visual <g> causes DrawingML converter to fail with
+        # 'unsupported visual SVG element: clipPath'.
+        if '<clippath' in content_lower:
+            defs_blocks = re.findall(r'<defs\b[^>]*>(.*?)</defs>', content, re.DOTALL | re.IGNORECASE)
+            clip_in_defs_count = sum(len(re.findall(r'<clippath\b', d, re.IGNORECASE)) for d in defs_blocks)
+            total_clip_count = len(re.findall(r'<clippath\b', content, re.IGNORECASE))
+            if clip_in_defs_count < total_clip_count:
+                result['errors'].append(
+                    "Detected <clipPath> defined outside <defs> (must be defined inside <defs> for PPTX compatibility)")
+
+        # Check for unescaped ampersand in XML text
+        if re.search(r'&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)', content):
+            result['errors'].append(
+                "Detected unescaped bare '&' character in SVG text (must use '&amp;' for XML well-formedness)")
+
         # Text / fonts
         if '<textpath' in content_lower:
             result['errors'].append("Detected forbidden <textPath> element (path text is incompatible with PPT)")
@@ -522,20 +544,302 @@ class SVGQualityChecker:
                         )
 
     def _check_text_elements(self, content: str, result: Dict):
-        """Check text elements and wrapping methods"""
-        # Count text and tspan elements
+        """Check text elements, wrapping methods, and 2D bounding-box text overlap constraints."""
         text_count = content.count('<text')
         tspan_count = content.count('<tspan')
 
         result['info']['text_elements'] = text_count
         result['info']['tspan_elements'] = tspan_count
 
-        # Check for overly long single-line text (may need wrapping)
-        text_matches = re.findall(r'<text[^>]*>([^<]{100,})</text>', content)
-        if text_matches:
-            result['warnings'].append(
-                f"Detected {len(text_matches)} potentially overly long single-line text(s) (consider using tspan for wrapping)"
-            )
+        # 1. XML-level parse for 2D bounding-box collision and overlap checking
+        try:
+            clean_content = re.sub(r'\sxmlns="[^"]+"', '', content)
+            root = ET.fromstring(clean_content)
+
+            def get_text_metrics(t_elem):
+                y_str = t_elem.get('y', '0')
+                x_str = t_elem.get('x', '0')
+                fs_str = t_elem.get('font-size', '14')
+                fs_match = re.search(r'([0-9.]+)', fs_str)
+                fs = float(fs_match.group(1)) if fs_match else 14.0
+                try:
+                    y = float(y_str)
+                    x = float(x_str)
+                except ValueError:
+                    return None
+                
+                text_body = "".join(t_elem.itertext()).strip()
+                if not text_body:
+                    return None
+                
+                # Estimate text width
+                cjk_count = len(re.findall(r'[\u4e00-\u9fff]', text_body))
+                latin_count = len(text_body) - cjk_count
+                w = (cjk_count * 1.0 + latin_count * 0.55) * fs
+                h = fs
+                # Text baseline is at y, so top is approx y - fs*0.85, bottom is y + fs*0.15
+                top = y - fs * 0.85
+                bottom = y + fs * 0.15
+                left = x
+                right = x + w
+                return {'left': left, 'right': right, 'top': top, 'bottom': bottom, 'x': x, 'y': y, 'fs': fs, 'body': text_body}
+
+            # Check direct children under each group
+            for g in root.iter('g'):
+                texts = g.findall('text')
+                if len(texts) >= 2:
+                    metrics_list = []
+                    for t in texts:
+                        m = get_text_metrics(t)
+                        if m:
+                            metrics_list.append(m)
+
+                    # Check all pairs in the same immediate container
+                    for i in range(len(metrics_list)):
+                        for j in range(i + 1, len(metrics_list)):
+                            m1 = metrics_list[i]
+                            m2 = metrics_list[j]
+
+                            # Check 2D AABB intersection with a small tolerance (2px)
+                            x_overlap = max(0.0, min(m1['right'], m2['right']) - max(m1['left'], m2['left']))
+                            y_overlap = max(0.0, min(m1['bottom'], m2['bottom']) - max(m1['top'], m2['top']))
+
+                            # If significant 2D overlap occurs
+                            if x_overlap > 8.0 and y_overlap > 3.0:
+                                result['errors'].append(
+                                    f"Detected text overlap: '{m1['body'][:15]}...' (x={m1['x']}, y={m1['y']}) and "
+                                    f"'{m2['body'][:15]}...' (x={m2['x']}, y={m2['y']}) "
+                                    f"[overlap: dx={x_overlap:.1f}px, dy={y_overlap:.1f}px]"
+                                )
+
+            # 2. Check for single-line text boundary overflow (unwrapped long lines)
+            for t in root.iter('text'):
+                tspans = t.findall('tspan')
+                lines = tspans if tspans else [t]
+
+                fs_str = t.get('font-size', '14')
+                fs_match = re.search(r'([0-9.]+)', fs_str)
+                fs = float(fs_match.group(1)) if fs_match else 14.0
+
+                for line in lines:
+                    line_text = "".join(line.itertext()).strip()
+                    if not line_text:
+                        continue
+                    
+                    cjk_count = len(re.findall(r'[\u4e00-\u9fff]', line_text))
+                    latin_count = len(line_text) - cjk_count
+                    est_width = (cjk_count * 1.0 + latin_count * 0.55) * fs
+
+                    # In card layouts (body text fs <= 16), lines > 480px overflow cards
+                    if fs <= 16 and est_width > 480 and cjk_count > 30:
+                        result['warnings'].append(
+                            f"Potentially unwrapped long text line ({len(line_text)} chars, est width ~{est_width:.0f}px): "
+                            f"'{line_text[:25]}...' - SVG text does not auto-wrap; ensure it does not spill into adjacent cards."
+                        )
+
+            # 2b. Check for multi-column / metric item text collision
+            for g in root.iter('g'):
+                gid = g.get('id', '').lower()
+                if any(k in gid for k in ['metric', 'stat', 'kpi', 'strip', 'bottom_bar']):
+                    for elem in g.iter():
+                        tag = elem.tag.split('}')[-1] if '}' in elem.tag else elem.tag
+                        if tag == 'text':
+                            txt_content = "".join(elem.itertext()).strip()
+                            cjk_c = len(re.findall(r'[\u4e00-\u9fff]', txt_content))
+                            lat_c = len(txt_content) - cjk_c
+                            fs_m = float(re.search(r'([0-9.]+)', elem.get('font-size', '12')).group(1)) if re.search(r'([0-9.]+)', elem.get('font-size', '12')) else 12.0
+                            m_width = (cjk_c * 1.0 + lat_c * 0.55) * fs_m
+                            if m_width > 260 and cjk_c > 16:
+                                result['warnings'].append(
+                                    f"Multi-column metric text potentially too wide ({len(txt_content)} chars, est width ~{m_width:.0f}px): "
+                                    f"'{txt_content[:25]}...' - In multi-column strips, text over ~250px causes cross-column collisions."
+                                )
+
+            # 3. Check for container / box / badge / card text boundary overflow (prevent text spilling outside rect borders)
+            for g in root.iter('g'):
+                rects = g.findall('rect')
+                texts = g.findall('text')
+                if not rects or not texts:
+                    continue
+
+                for r in rects:
+                    rx_str = r.get('rx', '0')
+                    rw_str = r.get('width', '0')
+                    rh_str = r.get('height', '0')
+                    rx_val = float(re.search(r'([0-9.]+)', rx_str).group(1)) if re.search(r'([0-9.]+)', rx_str) else 0.0
+                    rw_val = float(re.search(r'([0-9.]+)', rw_str).group(1)) if re.search(r'([0-9.]+)', rw_str) else 0.0
+                    rh_val = float(re.search(r'([0-9.]+)', rh_str).group(1)) if re.search(r'([0-9.]+)', rh_str) else 0.0
+                    ry_val = float(re.search(r'([0-9.]+)', r.get('y', '0')).group(1)) if re.search(r'([0-9.]+)', r.get('y', '0')) else 0.0
+                    rx_pos = float(re.search(r'([0-9.]+)', r.get('x', '0')).group(1)) if re.search(r'([0-9.]+)', r.get('x', '0')) else 0.0
+
+                    # Ignore full canvas backgrounds or microscopic rects
+                    if rw_val < 30.0 or rw_val >= 1200.0 or rh_val < 10.0:
+                        continue
+
+                    rect_id = r.get('id', '')
+
+                    for t in texts:
+                        t_tspans = t.findall('tspan')
+                        lines = t_tspans if t_tspans else [t]
+
+                        base_fs_m = re.search(r'([0-9.]+)', t.get('font-size', '14'))
+                        base_fs = float(base_fs_m.group(1)) if base_fs_m else 14.0
+                        font_fam = t.get('font-family', '').lower()
+                        anchor = t.get('text-anchor', 'start')
+                        letter_spacing_str = t.get('letter-spacing', '0')
+                        ls_val = float(re.search(r'([0-9.]+)', letter_spacing_str).group(1)) if re.search(r'([0-9.]+)', letter_spacing_str) else 0.0
+                        is_monospace = any(f in font_fam for f in ['mono', 'courier', 'consolas', 'code'])
+
+                        for line in lines:
+                            l_text = "".join(line.itertext()).strip()
+                            if not l_text:
+                                continue
+
+                            fs_m = re.search(r'([0-9.]+)', line.get('font-size', ''))
+                            fs = float(fs_m.group(1)) if fs_m else base_fs
+
+                            try:
+                                lx = float(line.get('x', t.get('x', '0')))
+                                ly = float(line.get('y', t.get('y', '0')))
+                            except ValueError:
+                                continue
+
+                            # Check if text is vertically inside this rect
+                            if not (ry_val - 4.0 <= ly <= ry_val + rh_val + 8.0):
+                                continue
+
+                            cjk_c = len(re.findall(r'[\u4e00-\u9fff]', l_text))
+                            latin_c = len(l_text) - cjk_c
+                            char_ratio = 0.65 if is_monospace else 0.55
+                            t_w = (cjk_c * 1.0 + latin_c * char_ratio) * fs + len(l_text) * ls_val
+
+                            # Calculate left and right bounds depending on text-anchor
+                            if anchor == 'middle':
+                                t_left = lx - t_w / 2.0
+                                t_right = lx + t_w / 2.0
+                            elif anchor == 'end':
+                                t_left = lx - t_w
+                                t_right = lx
+                            else:
+                                t_left = lx
+                                t_right = lx + t_w
+
+                            # Text should be horizontally inside or starting inside rect
+                            if not (rx_pos - 6.0 <= t_left <= rx_pos + rw_val * 0.85):
+                                continue
+
+                            # 1) Critical error: text spills outside right boundary of the container/card/code block
+                            if t_right > rx_pos + rw_val + 2.0:
+                                result['errors'].append(
+                                    f"Text container overflow: '{l_text[:35]}' (est right ~{t_right:.0f}px) extends beyond "
+                                    f"container boundary [x={rx_pos:.0f}, w={rw_val:.0f}, max_x={rx_pos+rw_val:.0f}px] by {t_right-(rx_pos+rw_val):.1f}px"
+                                )
+                            # 2) Critical error: text spills before left boundary
+                            elif t_left < rx_pos - 4.0:
+                                result['errors'].append(
+                                    f"Text container left overflow: '{l_text[:35]}' (left={t_left:.0f}px) extends before "
+                                    f"container left bound ({rx_pos:.0f}px)"
+                                )
+                            # 3) Warning: text is extremely close to the right edge (< 4px margin)
+                            elif t_right > rx_pos + rw_val - 4.0:
+                                result['warnings'].append(
+                                    f"Text margin danger: '{l_text[:35]}' (right ~{t_right:.0f}px) has less than 4px safe margin from rect boundary ({rx_pos+rw_val:.0f}px)"
+                                )
+        except Exception:
+            text_matches = re.findall(r'<text[^>]*>([^<]{100,})</text>', content)
+            if text_matches:
+                result['warnings'].append(
+                    f"Detected {len(text_matches)} potentially overly long single-line text(s) (consider using tspan for wrapping)"
+                )
+
+    def _check_connector_and_arrow_intrusions(self, content: str, result: Dict):
+        """Check if connector lines, paths, or floating label badges intrude into unrelated card containers."""
+        try:
+            clean_content = re.sub(r'\sxmlns="[^"]+"', '', content)
+            root = ET.fromstring(clean_content)
+
+            def get_transform_xy(elem):
+                tr = elem.get('transform', '')
+                m = re.search(r'translate\(\s*([0-9.-]+)\s*[,\s]\s*([0-9.-]+)\s*\)', tr)
+                if m:
+                    return float(m.group(1)), float(m.group(2))
+                return 0.0, 0.0
+
+            # 1. Collect all major card/container rects (global coordinates)
+            cards = []
+            labels = []
+
+            def walk(elem, cur_x=0.0, cur_y=0.0, p_id="", p_elem=None):
+                tx, ty = get_transform_xy(elem)
+                cx = cur_x + tx
+                cy = cur_y + ty
+                elem_id = elem.get('id', p_id)
+
+                tag = elem.tag.split('}')[-1]
+                if tag == 'rect':
+                    try:
+                        w = float(elem.get('width', '0'))
+                        h = float(elem.get('height', '0'))
+                        x = float(elem.get('x', '0')) + cx
+                        y = float(elem.get('y', '0')) + cy
+                    except ValueError:
+                        w, h, x, y = 0, 0, 0, 0
+
+                    if 80.0 <= w < 1200.0 and 28.0 <= h < 700.0:
+                        cards.append({'x1': x, 'y1': y, 'x2': x + w, 'y2': y + h, 'w': w, 'h': h, 'id': elem_id, 'p_elem': p_elem})
+                    elif 10.0 <= w < 300.0 and 12.0 <= h <= 48.0:
+                        labels.append({'x1': x, 'y1': y, 'x2': x + w, 'y2': y + h, 'w': w, 'h': h, 'id': elem_id, 'p_elem': p_elem})
+
+                for child in elem:
+                    walk(child, cx, cy, elem_id, elem)
+
+            walk(root)
+
+            # 2. Check if any floating label badge intrudes into an unrelated card
+            for lbl in labels:
+                lid = lbl['id'].lower()
+                is_flow_badge = any(k in lid for k in ['flow', 'arrow', 'connect', 'rollback', 'link'])
+                for c in cards:
+                    # Skip if card is the parent container of the label
+                    if c['p_elem'] == lbl['p_elem']:
+                        continue
+                    # Check 2D intersection
+                    x_ov = max(0.0, min(lbl['x2'], c['x2']) - max(lbl['x1'], c['x1']))
+                    y_ov = max(0.0, min(lbl['y2'], c['y2']) - max(lbl['x1'], c['y1']))
+                    if is_flow_badge and x_ov > 25.0 and y_ov > 8.0:
+                        result['errors'].append(
+                            f"Connector badge container intrusion: label '{lbl['id']}' [x={lbl['x1']:.0f}..{lbl['x2']:.0f}, y={lbl['y1']:.0f}..{lbl['y2']:.0f}] "
+                            f"intrudes into unrelated card [x={c['x1']:.0f}..{c['x2']:.0f}, y={c['y1']:.0f}..{c['y2']:.0f}] by overlap ({x_ov:.0f}x{y_ov:.0f}px)"
+                        )
+
+            # 3. Check if any connector path cuts through card boundaries
+            for g in root.iter('g'):
+                gid = g.get('id', '').lower()
+                if any(k in gid for k in ['flow', 'connect', 'arrow', 'rollback', 'route']):
+                    tx, ty = get_transform_xy(g)
+                    for p in g.findall('path'):
+                        d = p.get('d', '')
+                        # Match line segment sequences: M x1 y1 L x2 y2 ...
+                        # Extract all numbers from d
+                        pts = re.findall(r'([0-9.-]+)\s+([0-9.-]+)', d)
+                        if len(pts) >= 2:
+                            for idx in range(len(pts) - 1):
+                                x1, y1 = float(pts[idx][0]) + tx, float(pts[idx][1]) + ty
+                                x2, y2 = float(pts[idx+1][0]) + tx, float(pts[idx+1][1]) + ty
+                                # Horizontal segment cutting across card
+                                if abs(y1 - y2) < 2.0 and abs(x1 - x2) > 40.0:
+                                    min_x, max_x = min(x1, x2), max(x1, x2)
+                                    seg_y = (y1 + y2) / 2.0
+                                    for c in cards:
+                                        if c['y1'] + 10.0 <= seg_y <= c['y2'] - 10.0:
+                                            if min_x <= c['x1'] + 20.0 and max_x >= c['x2'] - 20.0:
+                                                result['errors'].append(
+                                                    f"Connector line container intrusion: horizontal path segment at y={seg_y:.0f} cuts through card [x={c['x1']:.0f}..{c['x2']:.0f}, y={c['y1']:.0f}..{c['y2']:.0f}]"
+                                                )
+        except Exception:
+            pass
+
+
 
     def _check_image_references(self, content: str, svg_path: Path, result: Dict):
         """Check image file existence and resolution vs display size."""
@@ -874,6 +1178,35 @@ class SVGQualityChecker:
                     f"({license_token}). Add compact credit text per "
                     f"references/image-searcher.md §7."
                 )
+
+    def _check_visual_richness(self, content: str, result: Dict):
+        """检查页面视觉丰富度与防纯文字大板块约束 (Text-Heavy Prevention Check).
+
+        【设计规范与约束依据】
+        参考 `references/shared-standards.md` §9 "Visual Richness & Text-Heavy Prevention Rule"。
+        高质量技术演示文稿强调“图文并茂、结构清晰、直观易懂”。若幻灯片包含大量密集的文字列表、
+        长段技术规格或代码块（文字节点 >= 15 且总字符数 >= 300），而没有任何 `<image>` 概念插图或
+        原生矢量数据图表（Data Charts/Visual Diagrams）作为视觉锚点，会导致页面视觉体验枯燥、
+        信息传递效率低下。
+
+        【自动化检查逻辑】
+        1. 检查页面是否包含 `<image` 标签或复杂图形路径；
+        2. 提取页面所有 `<text>` 节点并计算纯文本字符总量；
+        3. 若文本密集且无任何图像视觉焦点，输出明确的 `warning` 提示，引导在生图阶段通过大模型
+           生成 3D 概念插画（VLM / Text-to-Image）进行视觉增强。
+        """
+        content_lower = content.lower()
+        has_image = '<image' in content_lower
+        text_elements = re.findall(r'<text\b[^>]*>(.*?)</text>', content, re.DOTALL | re.IGNORECASE)
+        total_text_len = sum(len(re.sub(r'<[^>]+>', '', t).strip()) for t in text_elements)
+
+        # 判定是否为密集纯文本且缺少视觉图片
+        if len(text_elements) >= 15 and total_text_len >= 300 and not has_image:
+            result['warnings'].append(
+                f"Page is text-heavy ({len(text_elements)} text blocks, {total_text_len} chars) "
+                f"without any <image> visual anchor. Per shared-standards.md §9, consider generating "
+                f"1-2 AI concept illustrations (VLM / Text-to-Image) to enhance visual richness."
+            )
 
     @staticmethod
     def _normalize_size(value: str) -> str:

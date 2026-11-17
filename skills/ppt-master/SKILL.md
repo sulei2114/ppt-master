@@ -3,8 +3,9 @@ name: ppt-master
 description: >
   AI-driven multi-format SVG content generation system. Converts source documents
   (PDF/DOCX/URL/Markdown) into high-quality SVG pages and exports to PPTX through
-  multi-role collaboration. Use when user asks to "create PPT", "make presentation",
-  "生成PPT", "做PPT", "制作演示文稿", or mentions "ppt-master".
+  multi-role collaboration. Also creates top-tier academic paper architecture diagrams (Figure 1)
+  and methodology pipelines (PaperBanana powered). Use when user asks to "create PPT", "make presentation",
+  "生成PPT", "做PPT", "制作演示文稿", "学术架构图", "论文Figure 1", "画架构图", or mentions "ppt-master".
 ---
 
 # PPT Master Skill
@@ -27,7 +28,25 @@ description: >
 > 7. **SEQUENTIAL PAGE GENERATION ONLY** — In Executor Step 6, after the global design context is confirmed, SVG pages MUST be generated sequentially page by page in one continuous pass. Grouped page batches (for example, 5 pages at a time) are FORBIDDEN
 > 8. **SPEC_LOCK RE-READ PER PAGE** — Before generating each SVG page, Executor MUST `read_file <project_path>/spec_lock.md`. All colors / fonts / icons / images MUST come from this file — no values from memory or invented on the fly. Executor MUST also look up the current page's `page_rhythm` (`anchor` / `dense` / `breathing`), `page_layouts` (which template SVG to inherit, if any), and `page_charts` (which chart template to adapt, if any). Empty / absent entries are intentional Strategist signals — see executor-base.md §2.1. This rule exists to resist context-compression drift on long decks and to break the uniform "every page is a card grid" default
 > 9. **SVG MUST BE HAND-WRITTEN, NOT SCRIPT-GENERATED** — Every SVG page is written by the main agent directly, one page at a time (see rules 6 and 7). Writing or running a Python / Node / shell script that produces the SVG files in batch — looping over pages, templating from data, or emitting them via a generator — is FORBIDDEN, including under "save tokens", "quick draft", or "user is in a hurry" pretexts. The script-generation path was tried on a feature branch and abandoned: cross-page visual consistency depends on per-page authoring with full upstream context, which a generator script cannot reproduce
-> 10. **PPT OUTPUT PATH CONSTRAINT** — When generating PPT for a project, the final `.pptx` file MUST be saved to `<project_path>/PPT/` directory. This overrides any default `exports/` directory behavior. The export command MUST use `-o <project_path>/PPT/<project_name>_<timestamp>.pptx` format. This ensures all project artifacts are self-contained within the project directory
+> 10. **SINGLE LATEST PPTX ARTIFACT DISCIPLINE (同一PPT单最新版本留存硬约束)** — 同一个 PPT 项目在导出与重新构建时，**有且仅保留最新的一份 PPTX 制品**。在执行 Step 7.3 或应用注解重新导出时，必须输出为规范命名的 `<project_path>/PPT/<project_name>.pptx`，严禁在同一个项目下持续堆积带有不同时间戳的多个历史陈旧 `.pptx` 文件。重新导出或二次生成时，必须直接覆盖或清理该项目旧版本的 `.pptx`，确保 `<project_path>/PPT/` 目录下始终仅存在最新一份最终交付物。
+> 11. **TEXT & CODE BLOCK OVERFLOW DISCIPLINE (文本与代码块严禁溢出硬约束)** — In SVG, `<text>` nodes do NOT auto-wrap. Every text line, card parameter, and code/JSON snippet MUST be strictly budgeted against container width:
+>     - **No Inline Label + Complex Data**: NEVER place a Chinese label and a structured dictionary/array on the same single `<text>` line (e.g. `· 动作序列: actions: [...]` will inevitably overflow 544px containers). The label and the data payload MUST be separated into distinct vertical lines.
+>     - **Dedicated Nested Code Box**: For any code or JSON payload exceeding 40 characters, ALWAYS create a nested `<rect>` sub-box (e.g. height 42–60px, width `container_width - 40px`) and format the payload across indented multi-lines (`< 45` characters per line).
+>     - **Hard Character Limits per Line**: In a 544px card, CJK text MUST NOT exceed 35 characters/line, monospace code MUST NOT exceed 50 characters/line; in a 380px card, CJK MUST NOT exceed 24 characters/line, monospace MUST NOT exceed 34 characters/line. Violating this will trigger overflow defects.
+> 12. **CJK FONT RENDERING & LINUX COMPATIBILITY (中文字体跨平台与Linux渲染兼容规范)** — When declaring font stacks for Chinese/CJK content or monospace code blocks, include pre-installed open-source CJK fonts (e.g. `"WenQuanYi Micro Hei"`, `"Noto Sans CJK SC"`, `"Source Han Sans SC"`, `"SimHei"`) alongside Windows/macOS fonts (`"PingFang SC"`, `"Microsoft YaHei"`, `"Consolas"`, `sans-serif`) to ensure headless renderers (CairoSVG, Chromium) and Linux preview servers render crisp CJK glyphs, symbols, and monospace code without tofu boxes or garbled text.
+> 13. **CONTENT-LED VISUAL GRAMMAR (内容驱动的图形表达)** — Choose the visual form that best explains the content: process, comparison, hierarchy, timeline, data, or narrative. Do not default to card grids or add diagrams/images solely to fill space. Every visual element must clarify a relationship, support the page's main conclusion, or establish an intentional section mood. See `references/premium-visual-language.md` for the default flowchart, table, and color rules.
+> 14. **MULTI-COLUMN METRICS & CARD ANTI-COLLISION DISCIPLINE (多列指标栏与卡片防碰撞硬约束)** — When laying out multi-column status bars, KPI metrics strips, or horizontal card decks, the AI MUST strictly enforce per-column text length budgeting and position isolation to eliminate cross-column character collision ("前后字体重合"):
+>     - **Per-Column Character Budget**: In a 4-column strip (column width ~260–290px), text per line MUST NOT exceed 16 CJK characters (or 26 Latin characters); in a 3-column strip (~360–390px), max 22 CJK characters; in a 2-column card (~550–580px), max 34 CJK characters. A minimum safety margin of $\ge 25\text{px}$ before any divider line or card border is MANDATORY.
+>     - **No Unanchored Inline Overlap (禁止无坐标保护的内联文本叠加)**: In multi-column metric bars or cards, when displaying Label + Value pairs with distinct styles/colors, DO NOT rely on raw consecutive `<tspan>` tags without explicit coordinates. The AI MUST either format them as a single concatenated text string or separate them into distinct `<text>` elements with explicit, deterministic `x` coordinates (e.g. `Label: x=24`, `Value: x=110`) to eliminate cross-platform tspan text overlap risks.
+> 15. **CACHE-BUSTING & LIVE PREVIEW FRESHNESS DISCIPLINE (动态预览防强缓存与资源指纹硬约束)** — Browser caching can silently serve stale assets (e.g. returning HTTP 304 Not Modified for unchanged filenames like `image.png`), misleading users into believing feedback was not applied:
+>     - **Asset Path Versioning / Cache Busting (资源修改必更名)**: Whenever an image, diagram, or asset is modified, regenerated, or cleaned up in response to user feedback, the AI MUST rename or version the asset file (e.g. `images/<name>_v2.png` or `images/<name>_updated.png`) and update the SVG `<image href="...">` reference accordingly. NEVER overwrite an asset in place while keeping the exact same filename in the SVG.
+>     - **No-Store Server Headers**: All preview endpoints (`/`, `/api/*`, `/images/*`) MUST include `Cache-Control: no-store, no-cache, must-revalidate, max-age=0` and `Pragma: no-cache` headers to prevent stale 304 responses in user browsers.
+> 16. **MANDATORY VISUAL ANCHORS & NO PURE TEXT (严禁纯文本排版与图片强制写入硬约束)** — 严禁全纯文本卡片或缺乏视觉图象的大段文字堆砌。幻灯片中不能仅有纯文本，必须包含高质量的图片/视觉锚点（`<image href="...">`），如架构拓扑、交互时序、数据流转图、AI技术概念图或系统实体插图。页面必须图文结合、信息密度与视觉吸引力兼具，彻底杜绝单调枯燥的“纯文本PPT”。
+> 17. **CHINESE-FIRST PRESENTATION DISCIPLINE (生成PPT极力减少英文与尽可能使用中文硬约束)** — 生成 PPT 时必须最大限度减少英文词汇，除纯代码变量、专用协议名（如 `navigate_to_charge`、`navigation`、`ToolMessage`）或无公认中文对照的纯英文技术缩写外，所有大标题、副标题、标签、卡片标题、流程阶段、说明文本及图表文字**必须优先并且强制使用地道、专业的中文**，严禁使用非必要的中英双语夹杂或英文大写副标（如严禁滥用 `SYMPTOM & PHENOMENON`、`WHY IT ESCAPED`、`FEEDBACK ARCHITECTURE` 等英文占位），确保页面以中文为主、表意精准通透。
+> 18. **TOP-TIER ACADEMIC FIGURE & SYSTEM PIPELINE DISCIPLINE (顶会科研论文架构图与闭环演化范式)** — 当页面表达技术方案、模型架构、算法演化或论文解读等复杂系统时，严格遵循学术关键图（Figure 1）三大原则：
+>     - **三段式结构转译 (happy-figure 范式)**：强制拆解为 `输入与问题域` → `核心处理与交互演化域` → `验证门禁与准入域`，层次分明，绝不画无边界的平铺方块。
+>     - **两阶段门禁控制 (research-figure-pipeline 范式)**：进入执行前，必须先在规划/确认阶段对齐全局概念 Master 架构（域边界、模块职责、数据流向），再进行模块化矢量组装。
+>     - **原生 SVG 矢量容器与正交闭环 (Cocoon-AI & fireworks 规范)**：必须采用浅灰/冷调带标圆角容器（`rx="12"`）清晰隔离各域；连线采用带圆角的正交折线（`stroke-linejoin="round"`），并在折线中段悬浮浅色胶囊标注行为动词（如“反思建议”、“准入校验”）；必须包含判定门禁（$\theta$ 阈值或成功/失败分支）与向上闭环回滚箭头（Feedback Loop），严禁纯文本无图堆叠。
 
 > [!IMPORTANT]
 > ## 🌐 Language & Communication Rule
@@ -58,6 +77,7 @@ description: >
 | `${SKILL_DIR}/scripts/svg_quality_checker.py` | SVG quality check |
 | `${SKILL_DIR}/scripts/total_md_split.py` | Speaker notes splitting |
 | `${SKILL_DIR}/scripts/finalize_svg.py` | SVG post-processing (unified entry) |
+| `${SKILL_DIR}/scripts/fireworks_bridge.py` | Fireworks Tech Graph bridge (geometry checking, template rendering, EMF sync) |
 | `${SKILL_DIR}/scripts/svg_to_pptx.py` | Export to PPTX |
 | `${SKILL_DIR}/scripts/update_spec.py` | Propagate a `spec_lock.md` color / font_family change across all generated SVGs |
 
@@ -83,7 +103,8 @@ For complete tool documentation, see `${SKILL_DIR}/scripts/README.md`.
 | `verify-charts` | `workflows/verify-charts.md` | Chart coordinate calibration — run after SVG generation if the deck contains data charts |
 | `customize-animations` | `workflows/customize-animations.md` | Object-level PPTX animation customization — run only when the user explicitly asks to tune animation order/effects/timing |
 | `live-preview` | `workflows/live-preview.md` | Browser-based live preview — auto-started during generation and re-enterable any time the user mentions "live preview", "preview", "看效果", or wants to click/select a slide element |
-| `visual-review` | `workflows/visual-review.md` | Per-page rubric-based visual self-check — run only when the user explicitly asks for a visual re-pass on the generated SVGs (between Executor and post-processing). Opt-in only; never invoked by the main pipeline. |
+| `visual-review` | `workflows/visual-review.md` | Detailed per-page visual review and atomic layout fixes — run when explicitly requested; Executor also performs the lightweight design checklist in Step 6 by default. |
+| `academic-figure` | `workflows/academic-figure.md` | Standalone publication-grade academic architecture and pipeline figure creation (Figure 1, Methodology Overview; PaperBanana powered) |
 
 ---
 
@@ -154,14 +175,14 @@ Import source content (choose based on the situation):
 
 🚧 **GATE**: Step 2 complete; project directory structure is ready.
 
-**Default — free design.** Proceed directly to Step 4. Do NOT query any `*_index.json` unless triggered. Do NOT ask the user. Do NOT proactively suggest, hint at, or fuzzy-match any template based on content, slug-like words, or vague style descriptions.
+**Default — 算法与流水线技术对比风格 (Algorithm Pipeline Brand) 作为科技风格默认模板。** 当用户未显式传入其他模板目录路径时，默认直接采用 `templates/brands/algorithm-pipeline/` 作为全套幻灯片的基础品牌与视觉规范（极净白底 `#FFFFFF`、双轨对比主色 `#0070C0` 科技蓝 / `#2E7D32` 工程绿、胶囊药丸标题、多阶段处理流、中间态特征图、逆变换对齐闭环、底部公式/对比表/注意事项三列分析）。
 
 **Template flow triggers ONLY on explicit directory paths** supplied by the user in their initial message. The trigger rule is mechanical, not interpretive:
 
 | User input contains | Step 3 action |
 |---|---|
 | One or more explicit template directory paths (each resolves to a directory containing `design_spec.md` with `kind: brand` / `kind: layout` / `kind: deck` in its YAML frontmatter) | Read each spec's `kind`, dispatch per the kind matrix below, fuse if multiple |
-| Anything else — bare template names ("用 academic_defense"), style descriptions ("麦肯锡风格"), brand mentions ("招商银行风格"), vague intent ("想用个模板"), or silence | Skip Step 3, free design |
+| Anything else — bare template names, style descriptions, vague intent, or silence | 默认应用 **算法与流水线技术对比风格 (Algorithm Pipeline Brand)** 规范推进 Step 4 |
 
 There is no slug matching, no name lookup, no fuzzy resolution. A name without a path does not trigger — the user must give a path the AI can `cd` into.
 
@@ -287,6 +308,14 @@ Read references/strategist.md
 7. Typography plan, including formula rendering policy
 8. Image usage approach
 
+**Content Logic & Sufficiency Gate (before presenting the Eight Confirmations)**: first shape the topic into an explanatory chain, then use that chain to recommend page count and outline. For problem-solving or system-introduction topics, use this three-step logic:
+
+1. **问题是什么 (Problem)** — name the observed need, failure, constraint, or decision; make clear who is affected and why the audience should care.
+2. **为何会出现 (Cause)** — explain the underlying mechanism, context, or evidence that produces the problem. Distinguish verified facts from assumptions; do not replace causality with a generic “current situation” paragraph.
+3. **解决方案是什么 (Solution)** — show how the proposed system or action addresses the cause, including the relevant workflow, roles, inputs/outputs, quality gates, failure/recovery path, and expected result. Select the details that prove the solution; do not merely list feature names.
+
+This is a reasoning scaffold, not a mandatory three-slide structure. For topics that are not problem-oriented, translate it into the equivalent chain **question/context → explanation/mechanism → answer/recommendation**. Before locking the page outline, make a compact content ledger of the audience's must-understand points and map each point to a page and a source/evidence anchor. For every planned page, the outline should state its takeaway and the facts or relationships that support it. Check that a reader can understand what the subject is, why it matters, and how the described approach works. If the chain cannot fit clearly in the requested page count, recommend adding pages or reorganizing the narrative before removing essential explanatory content; when page count is fixed, compress repetition and secondary detail first. Do not use abstract value claims, whitespace, decorative imagery, or speaker notes as substitutes for missing on-slide explanation, and do not invent details to satisfy the outline.
+
 **Mandatory — split-mode note** (not a ninth confirmation): after listing the eight confirmation details, you MUST append exactly one short line (rendered in the user's language, prefixed with 💡) about generation mode. Pick the variant by qualitative read of Phase A signals — recommended page count, source-material bulk, whether `topic-research` ran with substantial web-fetch accumulation:
 
 | Signal read | Line content |
@@ -342,6 +371,8 @@ python3 ${SKILL_DIR}/scripts/analyze_images.py <project_path>/images
 ### Step 5: Image Acquisition Phase (Conditional)
 
 🚧 **GATE**: Step 4 complete; Design Specification & Content Outline generated and user confirmed. Any formula rows already have `Acquire Via: formula` and `Status: Rendered`.
+
+> **Visual-Expression Rule (Mandatory)**: For each planned page, select a visual expression that matches its content. Dense text may be edited down, organized with typographic hierarchy, or split across pages; use a diagram or image only when it communicates the content more clearly. Do not inject AI image rows solely because a page contains text, a table, or code. See `references/premium-visual-language.md` and `references/shared-standards.md` §9.
 
 > **Trigger**: At least one row in the resource list has `Acquire Via: ai` and/or `Acquire Via: web`. If every row is `user`, `formula`, or `placeholder`, skip to Step 6.
 
@@ -399,6 +430,7 @@ Read the role definition based on the selected style:
 ```
 Read references/executor-base.md          # REQUIRED: common guidelines
 Read references/shared-standards.md       # REQUIRED: SVG/PPT technical constraints
+Read references/premium-visual-language.md # REQUIRED: diagram, table, and color grammar
 Read references/executor-general.md       # General flexible style
 Read references/executor-consultant.md    # Consulting style
 Read references/executor-consultant-top.md # Top consulting style (MBB level)
@@ -426,14 +458,19 @@ python3 ${SKILL_DIR}/scripts/svg_editor/server.py <project_path> --live
 > ⚠️ **Generation rhythm**: generate pages sequentially, one at a time, in the same continuous context. Do NOT batch (e.g., 5 per group).
 
 **Visual Construction Phase**: generate SVG pages sequentially, one at a time, in one continuous pass → `<project_path>/svg_output/`
+- **Text Anti-Overlap, Container Boundary & Code Block Safe Margin (严禁字体重叠与边框容器溢出)**: SVG text does NOT auto-wrap. 任何卡片、步骤条、代码块、状态框内的单行代码与文字，必须严格受限于其所在的容器 `<rect>` 边界，且保留 $\ge 15\text{px}$ 安全呼吸边距。代码框内等宽半角文本单行严禁超过 36 字符（长 JSON 或多赋值语句必须按键值对拆为多行）。单行普通文本在 3 栏卡片内严禁超过 22 个中文字符，2 栏卡片内严禁超过 34 个中文字符，垂直行高 $\Delta y \ge \text{font\_size} \times 1.35$。
+- **Pill Badges & Flowchart Line Shielding (胶囊徽章与流程图防压字硬约束)**: Badge width must strictly bound inner text ($\text{width} \ge \text{text\_length} \times \text{char\_width} + \text{icon\_width} + 20\text{px} + \text{char\_count} \times \text{letter\_spacing}$). Flowchart/state machine lines must never cut through unshielded text; always place protective solid background rects under text labels sitting on paths (see `references/shared-standards.md` §4.3 and §4.4).
+- **Connector Routing & Zero Container Intrusion (严禁连线与箭头侵入其他卡片框)**: 跨板块、跨步骤的折线、连线与附属标牌，必须严格走外侧走廊或净空隙安全绕行，严禁切穿、横扫或覆盖非关联卡片的内部及边框（见 `references/shared-standards.md` §4.4）。
+- **Post-Generation Container Overflow & Line Intrusion Auto-Gate (生成后容器边框溢出与连线侵入自动拦截门禁)**: `svg_quality_checker.py` 强制对所有卡片/代码块/状态框的 `<rect>` 与其内 `<text>` 进行包围盒边界碰撞扫描，同时对所有跨卡片 `<path>`/`<line>` 及说明标牌进行穿透侵入检测，任何文字溢出边框或连线侵入其他框将直接抛出 ERROR 并阻断导出。
 
 **Quality Check Gate (Mandatory)** — after all SVGs, BEFORE annotation handling and speaker notes:
 ```bash
 python3 ${SKILL_DIR}/scripts/svg_quality_checker.py <project_path>
 ```
-- Any `error` (banned SVG features, viewBox mismatch, spec_lock drift, etc.) MUST be fixed before proceeding — return to Visual Construction, regenerate that page, re-run check.
-- `warning` entries (low-res image, non-PPT-safe font tail, etc.): fix when straightforward, otherwise acknowledge and release.
+- Any `error` (banned SVG features, `<clipPath>` defined outside `<defs>`, unescaped bare `&` / `<` / `>`, viewBox mismatch, text overlap / card boundary overflow, spec_lock drift, etc.) MUST be fixed before proceeding — return to Visual Construction, regenerate that page, re-run check.
+- `warning` entries (low-res image, non-PPT-safe font tail, long text lines, etc.): fix when straightforward, otherwise acknowledge and release.
 - Run against `svg_output/` (not after `finalize_svg.py` — finalize rewrites SVG and masks violations).
+
 
 **Logic Construction Phase**: generate speaker notes → `<project_path>/notes/total.md`
 
@@ -448,7 +485,7 @@ python3 ${SKILL_DIR}/scripts/svg_quality_checker.py <project_path>
 
 > **Chart pages?** If this deck contains data charts (bar / line / pie / radar / etc.), run the standalone [`verify-charts`](workflows/verify-charts.md) workflow before Step 7 to calibrate coordinates. AI models routinely introduce 10–50 px errors when mapping data to pixel positions; verify-charts eliminates that class of error. Skip if no chart pages.
 
-> **Visual self-check (opt-in)?** If the user explicitly asked for a per-page visual re-pass on the SVGs ("跑一下视觉自检 / 视觉回看", "visual review", "check pages visually", etc.), run the standalone [`visual-review`](workflows/visual-review.md) workflow before Step 7. Do NOT run it by default and do NOT recommend it based on inferred model capability or deck size — trigger is user request only.
+> **Visual and content self-check (Mandatory)**: after `svg_quality_checker.py` passes and before speaker notes, review each page against `references/premium-visual-language.md` §5 and the Step 4 Content Logic & Sufficiency Gate. In addition to visual hierarchy, content-fit, spacing/alignment, color restraint, diagram/table legibility, and consistency with neighboring pages, verify that the page communicates its promised takeaway with enough concrete, source-backed detail; for a problem-solving deck, confirm the problem → cause → solution chain remains understandable across the deck. A clean layout is not evidence of sufficient content. Fix either design defects or missing explanatory links in the SVG and rerun the quality checker. This lightweight pass is part of normal execution. The standalone [`visual-review`](workflows/visual-review.md) remains available when the user asks for a deeper rendered-image review.
 
 ---
 
@@ -477,12 +514,12 @@ python3 ${SKILL_DIR}/scripts/finalize_svg.py <project_path>
 
 **Step 7.3** — Export PPTX (embeds speaker notes by default):
 ```bash
-# Create PPT directory if not exists, then export with explicit output path:
+# Create PPT directory if not exists, then export with explicit output path (仅保留最新一份):
 mkdir -p <project_path>/PPT/
-python3 ${SKILL_DIR}/scripts/svg_to_pptx.py <project_path> -o <project_path>/PPT/<project_name>_<timestamp>.pptx
+python3 ${SKILL_DIR}/scripts/svg_to_pptx.py <project_path> -o <project_path>/PPT/<project_name>.pptx
 ```
 
-> ⚠️ **GLOBAL CONSTRAINT (Rule 10):** The `-o` flag with explicit `<project_path>/PPT/` output path is **MANDATORY**. Do NOT omit `-o` or use the default `exports/` directory. All generated `.pptx` files MUST be saved within the project's `PPT/` subdirectory to ensure project artifacts are self-contained.
+> ⚠️ **GLOBAL CONSTRAINT (Rule 10 - 同一PPT仅保留最新一份):** The `-o` flag with explicit `<project_path>/PPT/<project_name>.pptx` output path is **MANDATORY**. Do NOT omit `-o` or use the default `exports/` directory. All generated `.pptx` files MUST be saved within the project's `PPT/` subdirectory to ensure project artifacts are self-contained. **严禁在同一项目下堆积带有不同时间戳的多个历史陈旧 `.pptx`**。重新导出或二次生成时，必须直接覆盖或清理该项目旧版本的 `.pptx`，确保 `<project_path>/PPT/` 目录下始终仅有且仅保留最新一份最终交付物。
 
 > A copy of `svg_output/` is still snapshotted to `backup/<timestamp>/svg_output/` for re-export capability.
 

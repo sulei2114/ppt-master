@@ -229,6 +229,58 @@ Do NOT highlight: connectives, common verbs, every noun, decorative adjectives, 
 
 Color: use the deck's primary brand color for emphasis. Reserve green/red for actual positive/negative semantics.
 
+---
+
+### 4.2 严禁字体重叠与单行溢出通用约束 (Universal Anti-Overlap & Text Boundary Standards) [MANDATORY]
+
+1. **SVG 绝无自动折行特性**：SVG 规范中的 `<text>` 标签不会自动换行。任何长文本如果未手动断行，都会单行无限向右延伸，直接导致跨卡片穿透并与邻近文字严重重叠。
+2. **多栏栅格字符上限与容器边界保护公式**：
+   - **4 栏网格/卡片**（单卡宽度约 240~280px）：单行文本严禁超过 **14~16 个中文字符**（或 26 个英文字符）。
+   - **3 栏网格/卡片**（单卡宽度约 320~380px）：单行文本严禁超过 **20~22 个中文字符**（或 36 个英文字符）。
+   - **2 栏网格/卡片**（单卡宽度约 500~580px）：单行文本严禁超过 **30~34 个中文字符**（或 52 个英文字符）。
+   - **全宽单栏容器**（宽度约 1000~1180px）：单行文本严禁超过 **60~65 个中文字符**。
+   - 通用边界公式：任意容器宽度 $W_{\text{container}}$ 与其内文本起始位置 $X_{\text{start}}$ 必须满足：
+     $$X_{\text{start}} + \text{Text\_Estimated\_Width} \le X_{\text{container}} + W_{\text{container}} - \text{Padding}_{\text{right}} (\text{Padding} \ge 16\text{px})$$
+3. **代码块/JSON/参数框等宽字体容器硬约束 (Code Blocks & Monospace Containers)**：
+   - 等宽字体（`monospace` / `Consolas` / `Courier`）字符宽度约为普通字体的 1.2 倍（单字符宽约 $0.65 \times \text{font\_size}$）。
+   - **在宽度约 320~380px 的代码框内，单行代码严禁超过 36 个半角字符**。
+   - 严禁将长 JSON 对象（如 `{"current_role": "primary", "current_brain_ip": "..."}`）或多个连续赋值语句写在单行；**必须强制按键值对或语句拆分为多行**，并留出 $\ge 15\text{px}$ 右侧呼吸边距。
+4. **垂直行高防重叠规范**：
+   - 相邻文本行之间必须保证安全垂直间距：$\Delta y \ge \text{font\_size} \times 1.35$（例如：11px 字号 $\Delta y \ge 15\text{px}$；14px 字号 $\Delta y \ge 19\text{px}$；18px 字号 $\Delta y \ge 25\text{px}$），严禁 $\Delta y < \text{font\_size}$ 导致文字重叠。
+5. **生成后全量自动化检查与容器溢出拦截**：
+   - 生成完每页 SVG 后，必须运行 `svg_quality_checker.py`。检查器将对全页所有文字与各级容器/卡片/代码框 `<rect>` 边界进行硬性扫描，任何文字溢出边框或安全边距不足的情况将直接触发 ERROR 门禁并拦截流程。
+
+---
+
+### 4.3 胶囊徽章/标签与容器文本包裹性通用硬约束 (Universal Pill Badge & Container Bounding Standards) [MANDATORY]
+
+1. **底框尺寸与文本长度严格联动**：
+   - 无论页面何处出现的药丸徽章（Pill Badge）、状态标签（Status Tag）、分类 Chip、角标或带底色边框的容器（`<rect rx="..." .../>`），底框宽度必须严格根据文本字符数、字号及修饰图标进行自适应计算：
+     $$W_{\text{badge}} \ge \text{Text\_Estimated\_Width} + W_{\text{icon/dot}} + \text{Padding}_{\text{left+right}} (\ge 20\text{px}) + (\text{Char\_Count} \times \text{Letter\_Spacing})$$
+   - **【严禁】文字溢出底框**：严禁文字末端超出胶囊背景或未留安全呼吸内边距。
+2. **`letter-spacing` 间距累加**：
+   - 若对文本设置了 `letter-spacing`（如 `letter-spacing="0.5"` 或 `letter-spacing="1"`），每个字符都会增加对应间距，底框必须将该增量全部计入，确保文本 100% 容纳在圆角底框内部。
+3. **居中与对齐严谨性**：
+   - 当徽章文本使用 `text-anchor="middle"` 时，文本锚点 $X$ 必须严格位于底框中轴线 $X_{\text{rect}} + W_{\text{rect}}/2$；当使用 `text-anchor="start"` 时，必须留有至少 $8\sim 12\text{px}$ 的左侧内边距。
+
+---
+
+### 4.4 连线、路径与图表防压字与物理隔离底板规范 (Universal Line Collision Shielding Standards) [MANDATORY]
+
+1. **【严禁】连线与几何路径直接穿透文字**：
+   - 在任何架构图、流程图、状态机流转图、时序图或关系拓扑中，所有的连接线段、贝塞尔曲线、自环弧线（Self-loop Arc）以及折线箭头，严禁直接穿过未受保护的文字。
+2. **强制增加独立防护底板（Shielding Badge）**：
+   - 凡是在连线、路径、箭头或时序轴上方标注任何说明文字（如分支条件、状态转换动作、协议说明、时间戳等），**必须在 `<text>` 下方放置独立的实体防护底板矩形**（如 `<rect rx="3" fill="card_bg" stroke="border_color" .../>`），将文字与下方连线完全物理隔离，确保文本 100% 清晰可读。
+3. **图表节点与标题安全垂直呼吸间距**：
+   - 流程节点、图表顶部元素、自环弧线标注与上层容器卡片标题之间必须保持至少 **12~16px 的垂直安全呼吸间距**，严禁与模块标题发生上下粘连或重叠。
+4. **【严禁】跨卡片连线与箭头侵入/穿透非关联容器（Strict Obstacle Avoidance & No Container Intrusion）**：
+   - 跨阶段、跨列或跨板块的连接线、折线、贝塞尔曲线以及附带的说明标牌，**严禁从其他非关联卡片/步骤框的内部切穿或擦边侵入（Penetration Forbidden）**；
+   - 严禁将连线附属标牌（如警告胶囊、分支条件标签等）直接叠加覆盖在其他卡片的文字或背景框上方；
+   - **必须使用外侧专用通道安全绕行（Perimeter Routing）**：跨板块连线必须严格走卡片外部的走廊（Gutter）、外边距（Margin）或板块之间的净空隙（Buffer Zone），与沿途所有卡片边框保持至少 $\ge 6\text{px}$ 安全呼吸间距。
+5. **生成后自动化连线与标牌侵入拦截门禁（Line & Badge Intrusion Auto-Gate）**：
+   - `svg_quality_checker.py` 强制扫描全页连线路径与附属标牌，任何线条切入非目标卡片腹地或标牌与既有卡片发生 2D 矩形侵入重叠的行为，直接抛出 `[ERROR] Line/Badge container intrusion` 并拦截交付。
+
+
 ❌ **DON'T** — uniform-styled paragraph buries the insight:
 
 ```xml
@@ -773,3 +825,69 @@ project/
 ├── templates/     # Project templates (if any)
 └── *.pptx         # Exported PPT file
 ```
+
+---
+
+## 9. Content-Led Visual Expression & Mandatory Images (图文结合与严禁纯文本排版硬约束)
+
+幻灯片**严禁通篇纯文本排版**。页面不能仅靠文字和卡片色块填充，必须合理安排版面空间，嵌入高质量的视觉图片或图像锚点（如系统拓扑图、交互架构图、AI技术概念图、运行时监控大屏或实体渲染图 `<image href="...">`）。
+
+文字与图像应当形成强呼应：通过左文右图、上图下文或关键卡片内嵌配图的方式，既保留结构化文本与等宽代码的精确度，又通过视觉图像直观传递系统全貌与技术质感，彻底消除“纯文本大字报”的枯燥感。所有嵌入的 `<image>` 必须遵循 PPTX DrawingML 规范，确保可编辑与跨端导出。
+
+---
+
+## 10. Text Budgeting, Code Block Formatting & Overflow Prevention (文本与代码块防溢出技术规范)
+
+1. **SVG Text No-Wrap Constraint (文本无自动换行底层约束)**:
+   - In SVG, `<text>` nodes do NOT auto-wrap. All line breaks MUST be explicit via multiple `<text>` elements with incremental `y` coordinates.
+   - Width estimation formula:
+     - CJK Text: `width ≈ character_count * font_size * 1.05`
+     - Monospace / Latin: `width ≈ character_count * font_size * 0.65`
+   - The total estimated text width MUST never exceed `container_width - 2 * padding` (safe margin: at least 16px on each side).
+
+2. **No Inline Label + Complex Data (严禁单行混排复杂数据结构)**:
+   - NEVER place a Chinese parameter label and a structured dictionary/array on the same single line (e.g. `· 动作序列: actions: [{"at_ms":0, ...}]` will inevitably exceed 544px card width).
+   - The label and the data payload MUST be separated into distinct vertical lines or a dedicated nested code block.
+
+3. **Dedicated Nested Code Boxes (嵌套代码块与 JSON 多行缩进规范)**:
+   - For any JSON payload or structured code snippet exceeding 40 characters:
+     - ALWAYS create a dedicated nested `<rect>` container (e.g. `fill="#F8FAFC"` or `#0F172A`, height 42–60px, width `container_width - 40px`);
+     - Indent and format the payload across multi-lines (maximum 40–45 characters per line);
+     - Container height MUST satisfy: `height >= line_count * 18 + 24`.
+
+4. **Hard Character Limit Table (单行硬性字符预算表)**:
+
+| 容器宽度 (Container Width) | 中文字符上限 (Max CJK Chars) | 等宽/英文字符上限 (Max Code Chars) |
+|---|---|---|
+| **576px / 544px 卡片** | ≤ 35 字 | ≤ 48 字符 |
+| **380px 卡片** | ≤ 24 字 | ≤ 32 字符 |
+| **264px 嵌套子卡片** | ≤ 16 字 | ≤ 22 字符 |
+
+5. **CJK Font Compatibility on Linux & Cross-Platform (中文字体跨平台渲染兼容规范)**:
+   - Always declare font stacks with open-source Linux CJK fallbacks: `"WenQuanYi Micro Hei", "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", Arial, sans-serif`.
+   - Monospace stacks: `"WenQuanYi Micro Hei Mono", Consolas, "Courier New", monospace`.
+   - Include open-source CJK fallback fonts, ensuring crisp rendering of CJK characters, monospace code, and common symbols without tofu boxes in CairoSVG, headless LibreOffice, and live preview servers.
+
+6. **Multi-Column Status Strips & Horizontal Anti-Collision Discipline (多列横向指标条与分栏防碰撞硬约束)**:
+   - In horizontal bottom metric strips, KPI status bars, or multi-column data decks (e.g. 1200px divided into 4 columns):
+     - **Column Width & Character Budget (分栏字符预算)**:
+       - 4-column strip (column width ~260–290px): Max 16 CJK characters (or 26 Latin characters) per line.
+       - 3-column strip (~360–390px): Max 22 CJK characters per line.
+       - 2-column card (~550–580px): Max 34 CJK characters per line.
+     - **Divider Safety Buffer**: Every column MUST maintain a safety margin of at least $\ge 25\text{px}$ before any divider line or adjacent column border. Never allow text to extend across the divider and collide with adjacent text ("前后字体重合").
+     - **No Unanchored Inline Overlap (禁止无坐标保护的内联文本叠加)**: When displaying Label + Value pairs with different styles/colors in narrow columns, DO NOT rely on ambiguous `<text><tspan>Label</tspan><tspan>Value</tspan></text>` without explicit positioning. Always split into distinct `<text>` elements with explicit `x` coordinates (e.g. `Label: x=24`, `Value: x=110`) or format as a single cohesive text string to eliminate cross-platform tspan text overlap.
+
+7. **Asset Cache-Busting & Live Preview Freshness Discipline (动态预览防强缓存与资源版本化约束)**:
+   - Modern browsers aggressively cache static assets (returning HTTP 304 Not Modified for unchanged filenames like `image.png`), which causes feedback modifications to appear silently unapplied:
+     - **Asset Versioning on Feedback (修改必更名)**: Whenever an image, diagram, or asset is modified, regenerated, or cleaned up in response to user feedback, ALWAYS version or rename the file (e.g. `images/<name>_v2.png` or `images/<name>_updated.png`) and update the SVG `<image href="...">` reference accordingly. NEVER overwrite an asset in place while keeping the exact same filename in the SVG.
+     - **No-Cache Response Headers**: Preview servers MUST always attach `Cache-Control: no-store, no-cache, must-revalidate, max-age=0` and `Pragma: no-cache` to all slide and image endpoints.
+
+8. **Formula Box & Flowchart Loop Anti-Collision Discipline (公式框防碰撞与流程图返工回路防穿透重叠硬约束)**:
+   - **Formula Container Safety Buffer (公式框与状态卡片防重叠)**:
+     - When presenting formula boxes (e.g. `Final = 100 - CheckFail(10) - Issues`) side-by-side with adjacent KPI / gate failure badges (e.g. `门禁失败: 扣 10 分`):
+       - The formula background `<rect>` MUST strictly wrap the formula text without excess horizontal stretching (`width = char_count * font_size * 0.65 + 16px`).
+       - The distance between the formula box boundary and the next divider line / adjacent card container MUST maintain a safety buffer of at least $\ge 25\text{px}$. Never allow formula text or background boxes to collide with or touch adjacent status cards ("与后面的门禁失败框重合").
+   - **Flowchart Rejection Loop Anti-Collision (流程图返工回路防穿透与防重叠约束)**:
+     - Curved rejection/return paths (`<path>`) and return badges ("驳回返工") MUST NOT intrude into card outer boundaries or overlap with card header titles/subtitles ("线条侵入边框" / "字体重合").
+     - The return path's highest/lowest control points MUST maintain a safety clearance of $\ge 16\text{px}$ from container borders and text baselines.
+     - Text labels on return paths MUST be wrapped in dedicated pills/badges with background fills (`fill="#FEF2F2"`) and explicit margins, placed in unobstructed gaps to prevent font collision with lines or header text.
